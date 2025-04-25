@@ -31,18 +31,18 @@ DELETE FROM satset_locations
 WHERE
     id IN ('46a18b96-d8bb-48f4-a9e0-1b79ff30fa79');
 
--- Data Resource Practitioner - Dokter
+-- Data Resource Practitioner - Dokter dan Perawat
 DELETE FROM tbl_dokter
 WHERE
-    kodokter = 'SKIDR1001';
+    kodokter IN ('SKIDR1001', 'SKIPRT0001');
 
 DELETE FROM tbl_doktercabang
 WHERE
-    kodokter = 'SKIDR1001';
+    kodokter IN ('SKIDR1001', 'SKIPRT0001');
 
 DELETE FROM satset_practitioners
 WHERE
-    id IN ('10009880728');
+    id IN ('10009880728', '10014058550');
 
 -- Data Resource Patient
 DELETE FROM tbl_pasien
@@ -57,6 +57,17 @@ WHERE
 DELETE FROM tbl_regist
 WHERE
     noreg = 'SKIRJ20250000077';
+
+-- Resource Condition, Observation, ClinicalImpression - Rekam Medis
+DELETE FROM tbl_rekammedisrs
+WHERE
+    noreg = 'SKIRJ20250000077';
+
+-- Resource Condition, Procedure - Diagnosa dan Tindakan
+DELETE FROM tbl_icdtr
+WHERE
+    noreg = 'SKIRJ20250000077'
+    AND icdcode IN ('N18.4', 'N20.0', '39.95', '98.51');
 
 -- =========================
 -- INSERT DATA BARU
@@ -98,7 +109,7 @@ VALUES
 INSERT INTO
     satset_organizations (id, type, attributes)
 VALUES
-    ('9e440888-2ab1-4f97-9b29-80eff581344f', '', '{"id": "9e440888-2ab1-4f97-9b29-80eff581344f"}');
+    ('9e440888-2ab1-4f97-9b29-80eff581344f', '', '{"id":"9e440888-2ab1-4f97-9b29-80eff581344f"}');
 
 
 -- Data Resource Organization - Department
@@ -131,7 +142,7 @@ VALUES
 INSERT INTO
     satset_organizations (id, type, organizationable_id, organizationable_type, attributes)
 VALUES
-    ('c9c04a20-da73-431a-a503-b5bddc7002b1', 'Poly', 1, 'App\\Models\\SatSet\\BranchDepartment', '{"id": "c9c04a20-da73-431a-a503-b5bddc7002b1"}');
+    ('c9c04a20-da73-431a-a503-b5bddc7002b1', 'Poly', 1, 'App\\Models\\SatSet\\BranchDepartment', '{"id":"c9c04a20-da73-431a-a503-b5bddc7002b1"}');
 
 -- Data Resource Organization - Department
 INSERT INTO
@@ -163,7 +174,7 @@ VALUES
 INSERT INTO
     satset_organizations (id, type, organizationable_id, organizationable_type, attributes)
 VALUES
-    ('0c4b3add-74a1-4ea7-839b-d5caf8e645f0', 'Poly', 2, 'App\\Models\\SatSet\\BranchDepartment', '{"id": "0c4b3add-74a1-4ea7-839b-d5caf8e645f0"}');
+    ('0c4b3add-74a1-4ea7-839b-d5caf8e645f0', 'Poly', 2, 'App\\Models\\SatSet\\BranchDepartment', '{"id":"0c4b3add-74a1-4ea7-839b-d5caf8e645f0"}');
 
 -- Data Resource Location - Ruang Poli
 INSERT INTO
@@ -198,9 +209,9 @@ VALUES
 INSERT INTO
     satset_locations (id, attributes)
 VALUES
-    ('46a18b96-d8bb-48f4-a9e0-1b79ff30fa79', '{"id": "46a18b96-d8bb-48f4-a9e0-1b79ff30fa79"}');
+    ('46a18b96-d8bb-48f4-a9e0-1b79ff30fa79', '{"id":"46a18b96-d8bb-48f4-a9e0-1b79ff30fa79"}');
 
--- Data Resource Practitioner - Dokter
+-- Data Resource Practitioner - Dokter dan Perawat
 INSERT INTO
     tbl_dokter (
         koders,
@@ -222,8 +233,8 @@ VALUES
         'dr. Alexander',
         2,
         1,
-        '15 01 0 2 3 00-0001002',
-        '081212345678',
+        '10 01 0 0 0 00-0001001',
+        '082211223344',
         'ON',
         '10009880728'
     );
@@ -236,7 +247,44 @@ VALUES
 INSERT INTO
     satset_practitioners (id, attributes)
 VALUES
-    ('10009880728', '{"id": "10009880728"}');
+    ('10009880728', '{"id":"10009880728"}');
+
+INSERT INTO
+    tbl_dokter (
+        koders,
+        kodokter,
+        nik,
+        nadokter,
+        jenis_kerja_sama,
+        jenispegawai,
+        nostr,
+        hp,
+        status,
+        satset_practitioner_id
+    )
+VALUES
+    (
+        'SKI',
+        'SKIPRT0001',
+        '3313096403900009',
+        'Sheila Annisa S.Kep',
+        1,
+        2,
+        '10 01 0 0 0 00-0001002',
+        '082211223355',
+        'ON',
+        '10014058550'
+    );
+
+INSERT INTO
+    tbl_doktercabang (koders, kodokter)
+VALUES
+    ('SKI', 'SKIPRT0001');
+
+INSERT INTO
+    satset_practitioners (id, attributes)
+VALUES
+    ('10014058550', '{"id":"10014058550"}');
 
 -- Data Resource Patient
 INSERT INTO
@@ -289,7 +337,7 @@ VALUES
 INSERT INTO
     satset_patients (id, attributes)
 VALUES
-    ('P02478375538', '{"id": "P02478375538"}');
+    ('P02478375538', '{"id":"P02478375538"}');
 
 -- Resource Encounter - Outpatient
 INSERT INTO
@@ -325,6 +373,140 @@ VALUES
         1,
         '2025-04-24 11:05:00',
         '11:05:00'
+    );
+
+-- Resource Condition, Observation, ClinicalImpression - Rekam Medis
+INSERT INTO
+    tbl_rekammedisrs (
+        koders,
+        noreg,
+        rekmed,
+        kodepos,
+        koperawat,
+        tglperiksa,
+        jam,
+        kodokter,
+        tglkonsul,
+        jamdikonsul,
+        alergi_lingkungan,
+        alergi_makanan,
+        alergi_obat,
+        tdarah,
+        tdarah1,
+        nadi,
+        nafas,
+        suhu,
+        oksigen,
+        tinggibadan,
+        beratbadan,
+        bmi,
+        bmiresult,
+        riwayat_psikososial_dan_spiritual_data,
+        prognosa,
+        uronefrologi,
+        keluhanawal,
+        kondisi_pulang
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000077',
+        '0000077',
+        'PURO',
+        'SKIPRT0001',
+        '2025-04-24 10:30:00',
+        '10:30:00',
+        'SKIDR00001',
+        '2025-04-24 10:35:00',
+        '10:35:00',
+        '[{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Debu Rumah","keterangan":null}]',
+        '[{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Alergi daging bebek","keterangan":null}]',
+        '[{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Azitromicin","keterangan":null},{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Paracetamol","keterangan":null}]',
+        110,
+        90,
+        90,
+        30,
+        40,
+        98,
+        170,
+        54,
+        18.68,
+        'Normal Weight',
+        '{"status_mental":"Marah","status_mental_lainnya":null}',
+        '03',
+        '{"hipertensi":"1","derajat_hipertensi":"827069000|Stage 1 hypertension","mendapat_obat_hipertensi":"1","hipertensi_terkontrol":"1","batu_saluran_kemih":"1","lokasi_batu":"18639004|Left kidney","derajat_hidronefrosis":"258351006|Grade 1","diabetes_mellitus":"1","mendapat_obat_diabetes_mellitus":"1","diabetes_mellitus_terkontrol":"1","keparahan_batu_saluran_kemih":"709044004|Chronic kidney disease"}',
+        'Penurunan output urin',
+        'KELUAR002'
+    );
+
+-- Resource Condition - Diagnosa
+INSERT INTO
+    tbl_icdtr (
+        koders,
+        noreg,
+        rekmed,
+        icdcode,
+        utama
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000077',
+        '0000077',
+        'N18.4',
+        1
+    );
+
+INSERT INTO
+    tbl_icdtr (
+        koders,
+        noreg,
+        rekmed,
+        icdcode,
+        utama
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000077',
+        '0000077',
+        'N20.0',
+        0
+    );
+
+-- Resource Procedure - Tindakan
+INSERT INTO
+    tbl_icdtr (
+        koders,
+        noreg,
+        rekmed,
+        icdcode,
+        utama
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000077',
+        '0000077',
+        '39.95',
+        1
+    );
+
+INSERT INTO
+    tbl_icdtr (
+        koders,
+        noreg,
+        rekmed,
+        icdcode,
+        utama
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000077',
+        '0000077',
+        '98.51',
+        0
     );
 
 COMMIT;
