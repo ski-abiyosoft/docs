@@ -27,6 +27,8 @@ Dokumentasi ini menjelaskan tentang bagaimana cara melakukan insert data ke dala
 | `city`             | Kode Kota/Kabupaten Rumah Sakit                                  | '3471'                                 |
 | `district`         | Kode Kecamatan Rumah Sakit                                       | '347101'                               |
 | `village`          | Kode Kelurahan/Desa Rumah Sakit                                  | '3471011002'                           |
+| `rw`               | RW Rumah Sakit                                                   | '00'                                   |
+| `rt`               | RT Rumah Sakit                                                   | '00'                                   |
 | `satset_organization_id` | ID Resource Organization (Satu Sehat)                      | '9e440888-2ab1-4f97-9b29-80eff581344f' |
 
 **Jika sudah pernah mengirim Resource Organization - Provider maka wajib insert ke `satset_organizations`**
