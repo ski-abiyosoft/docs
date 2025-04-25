@@ -462,7 +462,7 @@ Selain itu:
 | `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
 | `noreg`            | Nomor Registrasi                                         | 'SKIRJ20250000077'                            |
 | `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
-| `icdcode`          | Kode ICD 10                                              | '39.95'                                       |
+| `icdcode`          | Kode ICD 9                                               | '39.95'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
 
 ### Contoh Data Tindakan ESWL:
@@ -475,5 +475,5 @@ Selain itu:
 | `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
 | `noreg`            | Nomor Registrasi                                         | 'SKIRJ20250000077'                            |
 | `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
-| `icdcode`          | Kode ICD 10                                              | '98.51'                                       |
+| `icdcode`          | Kode ICD 9                                               | '98.51'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
