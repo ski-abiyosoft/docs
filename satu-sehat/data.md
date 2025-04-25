@@ -265,7 +265,7 @@ nama tabel: `satset_practitioners`**
 | Nama Kolom         | Keterangan                                               | Contoh Data                                   |
 |--------------------|----------------------------------------------------------|-----------------------------------------------|
 | `id`               | ID Resource Patient (Satu Sehat)                         | 'P02478375538'                                |
-| `attributes`       | Data Resource Patient (Satu Sehat)                       | '{"id": "P02478375538"}'                      |
+| `attributes`       | Data Resource Patient (Satu Sehat)                       | '{"id":"P02478375538"}'                      |
 
 ---
 
