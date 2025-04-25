@@ -87,6 +87,8 @@ INSERT INTO
         city,
         district,
         village,
+        rw,
+        rt,
         satset_organization_id
     )
 VALUES
@@ -96,13 +98,15 @@ VALUES
         '01-100100',
         'info@ski.co.id',
         'ski.co.id',
-        'Jl. Kaliurang Km 10, Ngaglik, Sleman, Daerah Istimewa Yogyakarta 55581',
+        'Jl. Magelang No.188, Karangwaru, Kec. Tegalrejo, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55242',
         'Sleman',
-        '55581',
+        '55242',
         '34',
-        '3404',
-        '340405',
-        '3404051004',
+        '3471',
+        '347101',
+        '3471011002',
+        '00',
+        '00',
         '9e440888-2ab1-4f97-9b29-80eff581344f'
     );
 
@@ -229,7 +233,7 @@ VALUES
     (
         'SKI',
         'SKIDR1001',
-        '7308122501850002',
+        '7209061211900001',
         'dr. Alexander',
         2,
         1,
@@ -314,7 +318,7 @@ VALUES
     (
         '0000077',
         'KTP',
-        '9372081501960003',
+        '9271060312000001',
         'Ardianto Putra',
         '1',
         '1996-08-15 00:00:00',
@@ -329,7 +333,7 @@ VALUES
         '01',
         '2',
         '',
-        '9372081501960003',
+        '9271060312000001',
         '',
         'P02478375538'
     );
