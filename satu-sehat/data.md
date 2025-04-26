@@ -254,7 +254,7 @@ nama tabel: `satset_practitioners`**
 | `kelurahan`        | Kode Kelurahan/Desa Pasien                               | '3471011002'                                  |
 | `rw`               | RW Pasien                                                | '00'                                          |
 | `rt`               | RT Pasien                                                | '00'                                          |
-| `status`           | Status Perkawinan Pasien                                 | '1'                                           |
+| `status`           | Status Perkawinan Pasien (1 Jika Belum Kawin, 2 jika Kawin, 3 jika Cerai Hidup, 4 jika Cerai Mati) | '1' |
 | `cust_id`          | Kosongkan                                                | ''                                            |
 | `nik`              | NIK Pasien                                               | '9271060312000001'                            |
 | `last_reservation` | Kosongkan                                                | ''                                            |
