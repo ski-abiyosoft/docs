@@ -69,6 +69,33 @@ WHERE
     noreg = 'SKIRJ20250000077'
     AND icdcode IN ('N18.4', 'N20.0', '39.95', '98.51');
 
+-- Resource MedicationRequest - E-Resep
+DELETE FROM tbl_orderperiksa
+WHERE
+    orderno = 'SKIER20250000000001';
+
+DELETE FROM tbl_eresep
+WHERE
+    orderno = 'SKIER20250000000001';
+
+-- Resource QuestionnaireResponse - Telaah Resep
+DELETE FROM tbl_apotelaah
+WHERE
+    orderno = 'SKIER20250000000001';
+
+-- Resource MedicationDispense - Farmasi Penjualan
+DELETE FROM tbl_apoposting
+WHERE
+    resepno = 'SKIR202506000000001';
+
+DELETE FROM tbl_apohresep
+WHERE
+    resepno = 'SKIR202506000000001';
+
+DELETE FROM tbl_apodresep
+WHERE
+    resepno = 'SKIR202506000000001';
+
 -- =========================
 -- INSERT DATA BARU
 -- =========================
@@ -510,6 +537,288 @@ VALUES
         'SKIRJ20250000077',
         '0000077',
         '98.51',
+        0
+    );
+
+-- Resource MedicationRequest - E-Resep
+INSERT INTO
+    tbl_orderperiksa (
+        koders,
+        orderno,
+        noreg,
+        rekmed,
+        tglorder,
+        jamorder,
+        proses,
+        kodokter,
+        asal,
+        resep,
+        resepok,
+        username,
+        gudang,
+        obatpulang,
+        kodepos
+    )
+VALUES
+    (
+        'SKI',
+        'SKIER20250000000001',
+        'SKIRJ20250000077',
+        '0000077',
+        '2025-04-24 10:35:00',
+        '10:35:00',
+        '1',
+        'SKIDR1001',
+        'Spesialis Urologi | Ruang Spesialis Urologi',
+        1,
+        1,
+        'admin',
+        'FARMASI',
+        0,
+        'PURO'
+    );
+
+INSERT INTO
+    tbl_eresep (
+        koders,
+        noreg,
+        orderno,
+        kodeobat,
+        namaobat,
+        satuan,
+        qty,
+        harga,
+        totalharga,
+        aturanpakai,
+        kronis
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000077',
+        'SKIER20250000000001',
+        '0300',
+        'PARACETAMOL 500MG TAB KF',
+        'TABLET',
+        12,
+        235,
+        2830,
+        '3 X 1',
+        0
+    );
+
+-- Resource QuestionnaireResponse - Telaah Resep
+INSERT INTO
+    tbl_apotelaah (orderno, kode, aspek, unsur, resepno, ok)
+VALUES
+    (
+        'SKIER20250000000001',
+        1,
+        'KELENGKAPAN PENGISIAN RESEP',
+        'administrasi',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        2,
+        'KEJELASAN PENULISAN RESEP',
+        'administrasi',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        3,
+        'TETAP OBAT (NAMA, BENTUK, KEKUATAN,JUMLAH)',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        4,
+        'TEPAT FREKUENSI',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        5,
+        'OBAT STABIL SECARA FISIK DAN KIMIA',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        6,
+        'OBAT TERSEDIA',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        7,
+        'TEPAT INDIKASI/DOSIS/WAKTU/RUTE',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        8,
+        'DUPLIKASI TERAPI',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        9,
+        'INTERAKSI',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000001',
+        10,
+        'KONTRADIKSI',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'RSAER20250000019324',
+        11,
+        'ROTD/TOKSISITAS',
+        'klinis',
+        '',
+        1
+    );
+
+-- Resource MedicationDispense - Farmasi Penjualan
+INSERT INTO
+    tbl_apoposting (
+        koders,
+        resepno,
+        eresepno,
+        tglresep,
+        noreg,
+        rekmed,
+        namapas,
+        umurpas,
+        gudang,
+        poscredit,
+        diskonrp,
+        bayar,
+        posting,
+        keluar,
+        kodepel,
+        username
+    )
+VALUES
+    (
+        'SKI',
+        'SKIR202506000000001',
+        'SKIER20250000000001',
+        '2025-04-24 10:38:00',
+        'SKIRJ20250000077',
+        '0000077',
+        'Ardianto Putra',
+        '28 tahun, 8 bulan, 9 hari',
+        'FARMASI',
+        2830,
+        0,
+        0,
+        1,
+        0,
+        'RAJAL',
+        'admin'
+    );
+
+INSERT INTO
+    tbl_apohresep (
+        koders,
+        resepno,
+        eresepno,
+        noreg,
+        rekmed,
+        jenisjual,
+        jenispas,
+        pro,
+        tglresep,
+        jam,
+        kodokter,
+        gudang,
+        bayar,
+        posting,
+        username,
+        kodepel,
+        tgl_telaah,
+        user_telaah
+    )
+VALUES
+    (
+        'SKI',
+        'SKIR202506000000001',
+        'SKIER20250000000001',
+        'SKIRJ20250000077',
+        '0000077',
+        1,
+        1,
+        'Ardianto Putra',
+        '2025-04-24 10:38:00',
+        '10:38:00',
+        'SKIDR1001',
+        'FARMASI',
+        0,
+        1,
+        'admin',
+        'RAJAL',
+        '2025-04-24 10:39:00',
+        'user_apoteker'
+    );
+
+INSERT INTO
+    tbl_apodresep (
+        resepno,
+        eresepno,
+        koders,
+        kodebarang,
+        namabarang,
+        qty,
+        satuan,
+        discrp,
+        price,
+        hna,
+        hpp,
+        ppntype,
+        totalrp,
+        atpakai,
+        exp_date,
+        kronis
+    )
+VALUES
+    (
+        'SKIR202506000000001',
+        'SKIER20250000000001',
+        'SKI',
+        '0300',
+        'PARACETAMOL 500MG TAB KF',
+        12,
+        'TABLET',
+        0,
+        235,
+        170,
+        170,
+        1,
+        2830,
+        '3 X 1',
+        '2025-06-11',
         0
     );
 
