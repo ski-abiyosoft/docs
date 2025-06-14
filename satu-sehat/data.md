@@ -477,3 +477,130 @@ Selain itu:
 | `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
 | `icdcode`          | Kode ICD 9                                               | '98.51'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
+
+## 10. Resource MedicationRequest - E-Resep
+
+### Contoh Data Medication PARACETAMOL 500MG TAB KF:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_orderperiksa` dan `tbl_eresep` menggunakan `orderno`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_orderperiksa`
+
+| Nama Kolom     | Keterangan                                          | Contoh Data                                    |
+| -------------- | --------------------------------------------------- | ---------------------------------------------- |
+| `koders`       | Kode Rumah Sakit                                    | 'SKI'                                          |
+| `orderno`      | Nomor Order Pemeriksaan                             | 'SKIER20250000000001'                          |
+| `noreg`        | Nomor Registrasi                                    | 'SKIRJ20250000077'                             |
+| `rekmed`       | Nomor Rekam Medis Pasien                            | '0000077'                                      |
+| `tglorder`     | Tanggal Order Pemeriksaan                           | '2025-04-24 10:35:00'                          |
+| `jamorder`     | Jam Order Pemeriksaan                               | '10:35:00'                                     |
+| `proses`       | Status Proses Order (1 = Sudah diproses)            | 1                                              |
+| `kodokter`     | Kode Dokter yang mengorder                          | 'SKIDR1001'                                    |
+| `asal`         | Asal Unit/Poli dan Ruangan Order                    | 'Spesialis Urologi \| Ruang Spesialis Urologi' |
+| `resep`        | Flag Resep (1 = Ya)                                 | 1                                              |
+| `resepok`      | Flag Resep OK (1 = Ya)                              | 1                                              |
+| `username`     | Username Petugas Input                              | 'admin'                                        |
+| `gudang`       | Kode Gudang                                         | 'FARMASI'                                      |
+| `obatpulang`   | Flag Obat Pulang (1 = Ya, 0 = Tidak)                | 0                                              |
+| `kodepos`      | Kode Unit/Poli Order                                | 'PURO'                                         |
+
+**Tabel:** `tbl_eresep`
+
+| Nama Kolom     | Keterangan                                              | Contoh Data                |
+| -------------- | ------------------------------------------------------- | -------------------------- |
+| `koders`       | Kode Rumah Sakit                                        | 'SKI'                      |
+| `noreg`        | Nomor Registrasi Pasien                                 | 'SKIRJ20250000077'         |
+| `orderno`      | Nomor Order Pemeriksaan                                 | 'SKIER20250000000001'      |
+| `kodeobat`     | Kode Obat                                               | '0300'                     |
+| `namaobat`     | Nama Obat                                               | 'PARACETAMOL 500MG TAB KF' |
+| `satuan`       | Satuan Obat                                             | 'TABLET'                   |
+| `qty`          | Jumlah Obat yang Diresepkan                             | 12                         |
+| `harga`        | Harga Satuan Obat                                       | 235                        |
+| `totalharga`   | Total Harga Obat (harga x qty)                          | 2830                       |
+| `aturanpakai`  | Aturan Pakai Obat                                       | '3 X 1'                    |
+| `kronis`       | Indikasi Obat untuk Penyakit Kronis (1 = Ya, 0 = Tidak) | 0                          |
+
+## 11. Resource QuestionnaireResponse - Telaah Resep
+
+### Contoh Data Telaah:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_apotelaah` menggunakan `orderno`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_apotelaah`
+
+| Nama Kolom     | Keterangan                                                                       | Contoh Data                               |
+| -------------- | -------------------------------------------------------------------------------- | ------------------------------------------ |
+| `orderno`      | Nomor Order Pemeriksaan atau Resep                                               | 'SKIER20250000000001'                      |
+| `kode`         | Kode Penilaian Telaah (kode unik per aspek yang diambil dari tbl_aspektelaah)    | 1                                          |
+| `aspek`        | Nama Aspek yang diambil dari tbl_aspektelaah                                     | 'KELENGKAPAN PENGISIAN RESEP'              |
+| `unsur`        | Kategori atau Jenis Unsur yang diambil dari tbl_aspektelaah (administrasi, farmasetis, klinis) | 'administrasi'               |
+| `resepno`      | Nomor Resep Terkait (kosong jika belum dikaitkan langsung ke `resepno`)          | ''                                         |
+| `ok`           | Status Penilaian (1 = Sesuai, 0 = Tidak Sesuai)                                  | 1                                          |
+
+## 12. Resource MedicationDispense - Farmasi Penjualan
+
+### Contoh Data Medication PARACETAMOL 500MG TAB KF:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_apoposting`, `tbl_apohresep` dan `tbl_apodresep` menggunakan `resepno`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_apoposting`
+
+| Nama Kolom     | Keterangan                                     | Contoh Data              |
+| -------------- | ---------------------------------------------- | --------------------------- |
+| `koders`       | Kode Rumah Sakit                               | 'SKI'                       |
+| `resepno`      | Nomor Resep                                    | 'SKIR202506000000001'       |
+| `eresepno`     | Nomor E-Resep                                  | 'SKIER20250000000001'       |
+| `tglresep`     | Tanggal & Waktu Resep                          | '2025-04-24 10:38:00'       |
+| `noreg`        | Nomor Registrasi Pasien                        | 'SKIRJ20250000077'          |
+| `rekmed`       | Nomor Rekam Medis                              | '0000077'                   |
+| `namapas`      | Nama Pasien                                    | 'Ardianto Putra'            |
+| `umurpas`      | Umur Pasien (format usia)                      | '28 tahun, 8 bulan, 9 hari' |
+| `gudang`       | Kode Gudang                                    | 'FARMASI'                   |
+| `poscredit`    | Jumlah Biaya Resep (Total)                     | 2830                        |
+| `diskonrp`     | Diskon dalam Rupiah                            | 0                           |
+| `bayar`        | Jumlah yang Dibayar Pasien                     | 0                           |
+| `posting`      | Status Posting (1 = Sudah)                     | 1                           |
+| `keluar`       | Flag Obat Keluar (1 = Sudah Keluar)            | 0                           |
+| `kodepel`      | Kode Pelayanan (RAJAL, RANAP, APS)             | 'RAJAL'                     |
+| `username`     | Username Petugas                               | 'admin'                     |
+
+**Tabel:** `tbl_apohresep`
+
+| Nama Kolom     | Keterangan                                                  | Contoh Data           |
+| -------------- | ----------------------------------------------------------- | --------------------- |
+| `koders`       | Kode Rumah Sakit                                            | 'SKI'                 |
+| `resepno`      | Nomor Resep                                                 | 'SKIR202506000000001' |
+| `eresepno`     | Nomor E-Resep                                               | 'SKIER20250000000001' |
+| `noreg`        | Nomor Registrasi Pasien                                     | 'SKIRJ20250000077'    |
+| `rekmed`       | Nomor Rekam Medis                                           | '0000077'             |
+| `jenisjual`    | Jenis Penjualan (1)                                         | 1                     |
+| `jenispas`     | Jenis Pasien (1 = Rajal, 2 = Ranap)                         | 1                     |
+| `pro`          | Nama Pasien                                                 | 'Ardianto Putra'      |
+| `tglresep`     | Tanggal Resep                                               | '2025-04-24 10:38:00' |
+| `jam`          | Jam Resep                                                   | '10:38:00'            |
+| `kodokter`     | Kode Dokter                                                 | 'SKIDR1001'           |
+| `gudang`       | Kode Gudang                                                 | 'FARMASI'             |
+| `bayar`        | Bayar (1 = Sudah)                                           | 1                     |
+| `posting`      | Status Posting Resep (1 = Sudah)                            | 1                     |
+| `username`     | Username Petugas                                            | 'admin'               |
+| `kodepel`      | Kode Pelayanan (RAJAL, RANAP, APS)                          | 'RAJAL'               |
+| `tgl_telaah`   | Tanggal Telaah Obat oleh Apoteker                           | '2025-04-24 10:39:00' |
+| `user_telaah`  | Username Apoteker yang Menelaah                             | 'user_apoteker'       |
+
+**Tabel:** `tbl_apodresep`
+
+| Nama Kolom     | Keterangan                                     | Contoh Data             |
+| -------------- | ---------------------------------------------- | -------------------------- |
+| `resepno`      | Nomor Resep                                    | 'SKIR202506000000001'      |
+| `eresepno`     | Nomor E-Resep                                  | 'SKIER20250000000001'      |
+| `koders`       | Kode Rumah Sakit                               | 'SKI'                      |
+| `kodebarang`   | Kode Obat                                      | '0300'                     |
+| `namabarang`   | Nama Obat                                      | 'PARACETAMOL 500MG TAB KF' |
+| `qty`          | Jumlah Obat yang Diberikan                     | 12                         |
+| `satuan`       | Satuan Obat                                    | 'TABLET'                   |
+| `discrp`       | Diskon dalam Rupiah                            | 0                          |
+| `price`        | Harga Jual per Satuan                          | 235                        |
+| `hna`          | Harga Netto Apotek (Harga Beli)                | 170                        |
+| `hpp`          | Harga Pokok Penjualan                          | 170                        |
+| `ppntype`      | Tipe PPN (1 = PPN Aktif, 0 = Non-PPN)          | 1                          |
+| `totalrp`      | Total Harga Obat (Setelah diskon, jika ada)    | 2830                       |
+| `atpakai`      | Aturan Pakai Obat                              | '3 X 1'                    |
+| `exp_date`     | Tanggal Kedaluwarsa Obat                       | '2025-06-11'               |
+| `kronis`       | Obat untuk Penyakit Kronis (1 = Ya, 0 = Tidak) | 0                          |
