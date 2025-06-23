@@ -350,7 +350,7 @@ Jika Alergi lebih dari 1
 | Nama Kolom                 | Keterangan                                               | Contoh Data                                   |
 |----------------------------|----------------------------------------------------------|-----------------------------------------------|
 | `hipertensi`               | Hipertensi (1 jika Ya, 0 jika Tidak)                     | "1"                                           |
-| `derajat_hipertensi`       | Derajat (827069000|Stage 1 hypertension jika Stage 1 hypertension, 827068008|Stage 2 hypertension jika Stage 2 hypertension, OI000042|Stage 3 hypertension jika Stage 3 hypertension, 56218007|Systolic hypertension jika Systolic hypertension) | "827069000|Stage 1 hypertension"   |
+| `derajat_hipertensi`       | Derajat ("827069000\|Stage 1 hypertension" jika Stage 1 hypertension, "827068008\|Stage 2 hypertension" jika Stage 2 hypertension, "OI000042\|Stage 3 hypertension" jika Stage 3 hypertension, "56218007\|Systolic hypertension" jika Systolic hypertension) | "827069000\|Stage 1 hypertension"   |
 | `mendapat_obat_hipertensi` | Mendapat Obat (1 jika Ya, 0 jika Tidak)                  | "1"                                           |
 | `hipertensi_terkontrol`    | Terkontrol (1 jika Ya, 0 jika Tidak)                     | "1"                                           |
 
@@ -369,9 +369,9 @@ Jika Alergi lebih dari 1
 | Nama Kolom                        | Keterangan                                               | Contoh Data                                   |
 |-----------------------------------|----------------------------------------------------------|-----------------------------------------------|
 | `batu_saluran_kemih`              | Batu Saluran Kemih (1 jika Ya, 0 jika Tidak)             | "1"                                           |
-| `lokasi_batu`                     | Lokasi Batu (18639004|Left kidney jika Left kidney, 9846003|Right kidney jika Right kidney, 25308007|Right ureter jika Right ureter, 26559004|Left ureter jika Left ureter, 89837001|Urinary bladder jika Urinary bladder) | "18639004|Left kidney" |
-| `derajat_hidronefrosis`           | Derajat Hidronefrosis (258351006|Grade 1 jika Grade 1, 258352004|Grade 2 jika Grade 2, 258353009|Grade 3 jika Grade 3, 258354003|Grade 4 jika Grade 4, OV000352|Tidak ada hidronefrosis jika Tidak ada hidronefrosis) | "258351006|Grade 1" |
-| `keparahan_batu_saluran_kemih`    | Keparahan Batu Saluran Kemih (68566005|Urinary tract infection jika Urinary tract infection, 55189008|Non-infected jika Non-infected, 709044004|Chronic kidney disease jika Chronic kidney disease) | "709044004|Chronic kidney disease" |
+| `lokasi_batu`                     | Lokasi Batu ("18639004\|Left kidney" jika Left kidney, "9846003\|Right kidney" jika Right kidney, "25308007\|Right ureter" jika Right ureter, "26559004\|Left ureter" jika Left ureter, "89837001\|Urinary bladder" jika Urinary bladder) | "18639004\|Left kidney" |
+| `derajat_hidronefrosis`           | Derajat Hidronefrosis ("258351006\|Grade 1" jika Grade 1, "258352004\|Grade 2" jika Grade 2, "258353009\|Grade 3" jika Grade 3, "258354003\|Grade 4" jika Grade 4, "OV000352\|Tidak ada hidronefrosis" jika Tidak ada hidronefrosis) | "258351006|Grade 1" |
+| `keparahan_batu_saluran_kemih`    | Keparahan Batu Saluran Kemih ("68566005\|Urinary tract infection" jika Urinary tract infection, "55189008\|Non-infected" jika Non-infected, "709044004\|Chronic kidney disease" jika Chronic kidney disease) | "709044004\|Chronic kidney disease" |
 
 **Format Data Anamenesis Uronefrologi dan Pemeriksaan Uronefrologi**
 
@@ -417,10 +417,10 @@ Selain itu:
 | `bmi`              | Nilai IMT                                                | 18.68                                         |
 | `bmiresult`        | Hasil IMT                                                | 'Normal Weight'                               |
 | `riwayat_psikososial_dan_spiritual_data` | Status Mental                      | '{"status_mental":"Marah","status_mental_lainnya":null}' |
-| `prognosa`         | Prognosa (02 jika Bonam (Baik), 03 jika Malam (Buruk/Jelek), 04 Dubia Ad Sanam/Bolam (Tidak tentu/Ragu-ragu, Cenderung Sembuh/Baik), 05 jika Dubia Ad Malam (Tidak tentu/Ragu-ragu, Cenderung Buruk/Jelek)) | '03' |
+| `prognosa`         | Prognosa ("02" jika "Bonam (Baik)", "03" jika "Malam (Buruk/Jelek)", "04" jika "Dubia Ad Sanam/Bolam (Tidak tentu/Ragu-ragu, Cenderung Sembuh/Baik)", "05" jika "Dubia Ad Malam (Tidak tentu/Ragu-ragu, Cenderung Buruk/Jelek)") | '03' |
 | `uronefrologi`     | Anamenesis Uronefrologi dan Pemeriksaan Uronefrologi     | '{"hipertensi":"1","derajat_hipertensi":"827069000\|Stage 1 hypertension","mendapat_obat_hipertensi":"1","hipertensi_terkontrol":"1","batu_saluran_kemih":"1","lokasi_batu":"18639004\|Left kidney","derajat_hidronefrosis":"258351006\|Grade 1","diabetes_mellitus":"1","mendapat_obat_diabetes_mellitus":"1","diabetes_mellitus_terkontrol":"1","keparahan_batu_saluran_kemih":"709044004\|Chronic kidney disease"}' |
 | `keluhanawal`      | Keluhan Utama                                            | 'Penurunan output urin'                       |
-| `kondisi_pulang`   | Kondisi Pulang (KELUAR001 jika SEMBUH, KELUAR002 jika BELUM SEMBUH, KELUAR003 jika MENINGGAL <\48 JAM DALAM OPNAME, KELUAR004 jika MENINGGAL >\48 JAM DALAM OPNAME, KELUAR005 jika ATAS PERMINTAAN SENDIRI, KELUAR006 jika DIRUJUK, KELUAR007 jika MENERUSKAN DENGAN RAWAT JALAN, KELUAR008 jika MENERUSKAN DENGAN RAWAT INAP) | 'KELUAR002' |
+| `kondisi_pulang`   | Kondisi Pulang ("KELUAR001" jika "SEMBUH", "KELUAR002" jika "BELUM SEMBUH", "KELUAR003" jika "MENINGGAL <\48 JAM DALAM OPNAME", "KELUAR004" jika "MENINGGAL >\48 JAM DALAM OPNAME", "KELUAR005" jika "ATAS PERMINTAAN SENDIRI", "KELUAR006" jika "DIRUJUK", "KELUAR007" jika "MENERUSKAN DENGAN RAWAT JALAN", "KELUAR008" jika "MENERUSKAN DENGAN RAWAT INAP") | 'KELUAR002' |
 
 ## 8. Resource Condition - Diagnosa
 
