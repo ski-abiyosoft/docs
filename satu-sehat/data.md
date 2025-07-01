@@ -370,7 +370,7 @@ Jika Alergi lebih dari 1
 |-----------------------------------|----------------------------------------------------------|-----------------------------------------------|
 | `batu_saluran_kemih`              | Batu Saluran Kemih (1 jika Ya, 0 jika Tidak)             | "1"                                           |
 | `lokasi_batu`                     | Lokasi Batu ("18639004\|Left kidney" jika Left kidney, "9846003\|Right kidney" jika Right kidney, "25308007\|Right ureter" jika Right ureter, "26559004\|Left ureter" jika Left ureter, "89837001\|Urinary bladder" jika Urinary bladder) | "18639004\|Left kidney" |
-| `derajat_hidronefrosis`           | Derajat Hidronefrosis ("258351006\|Grade 1" jika Grade 1, "258352004\|Grade 2" jika Grade 2, "258353009\|Grade 3" jika Grade 3, "258354003\|Grade 4" jika Grade 4, "OV000352\|Tidak ada hidronefrosis" jika Tidak ada hidronefrosis) | "258351006|Grade 1" |
+| `derajat_hidronefrosis`           | Derajat Hidronefrosis ("258351006\|Grade 1" jika Grade 1, "258352004\|Grade 2" jika Grade 2, "258353009\|Grade 3" jika Grade 3, "258354003\|Grade 4" jika Grade 4, "OV000352\|Tidak ada hidronefrosis" jika Tidak ada hidronefrosis) | "258351006\|Grade 1" |
 | `keparahan_batu_saluran_kemih`    | Keparahan Batu Saluran Kemih ("68566005\|Urinary tract infection" jika Urinary tract infection, "55189008\|Non-infected" jika Non-infected, "709044004\|Chronic kidney disease" jika Chronic kidney disease) | "709044004\|Chronic kidney disease" |
 
 **Format Data Anamenesis Uronefrologi dan Pemeriksaan Uronefrologi**
