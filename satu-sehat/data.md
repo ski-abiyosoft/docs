@@ -3,7 +3,19 @@
 ## Daftar Isi
 
 - [Perkenalan](#-perkenalan)
-- [Resource Organization - Provider](#-resource-organization-provider)
+- [1. Resource Organization - Provider](#1-resource-organization---provider)
+- [2. Resource Organization - Department](#2-resource-organization---department)
+- [3. Resource Location - Ruang Poli](#3-resource-location---ruang-poli)
+- [4. Resource Practitioner - Dokter dan Perawat](#4-resource-practitioner---dokter-dan-perawat)
+- [5. Resource Patient](#5-resource-patient)
+- [6. Resource Encounter](#6-resource-encounter)
+- [7. Resource Observation - Triage (Emergency)](#7-resource-observation---triage-emergency)
+- [8. Resource Condition, Observation, QuestionnaireResponse, ClinicalImpression - Rekam Medis (Outpatient dan Emergency)](#8-resource-condition-observation-questionnaireresponse-clinicalimpression---rekam-medis-outpatient-dan-emergency)
+- [9. Resource Condition - Diagnosa](#9-resource-condition---diagnosa)
+- [10. Resource Procedure - Tindakan](#10-resource-procedure---tindakan)
+- [11. Resource MedicationRequest - E-Resep](#11-resource-medicationrequest---e-resep)
+- [12. Resource QuestionnaireResponse - Telaah Resep](#12-resource-questionnaireresponse---telaah-resep)
+- [13. Resource MedicationDispense - Farmasi Penjualan](#13-resource-medicationdispense---farmasi-penjualan)
 
 ## Perkenalan
 
@@ -322,7 +334,7 @@ nama tabel: `satset_practitioners`**
 
 ---
 
-## 6. Resource Encounter - Outpatient
+## 6. Resource Encounter
 
 ### Contoh Data Encounter:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_regist` menggunakan `noreg`. Jika sudah ada, jangan insert.**
@@ -348,7 +360,7 @@ nama tabel: `satset_practitioners`**
 
 ---
 
-## 7. Observation - Triage (Emergency)
+## 7. Resource Observation - Triage (Emergency)
 
 ### Contoh Data Triage:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_triage` menggunakan `noreg`. Jika sudah ada, jangan insert.**
