@@ -228,6 +228,52 @@ nama tabel: `satset_practitioners`**
 | `id`               | ID Resource Practitioner (Satu Sehat)                    | '10014058550'          |
 | `attributes`       | Data Resource Practitioner (Satu Sehat)                  | '{"id":"10014058550"}' |
 
+### Contoh Data Apoteker:
+**Prosedur insert yang sama seperti Dokter Spesialis Urologi.**
+
+**Tabel:** `tbl_dokter`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
+| `kodokter`         | Kode Dokter                                              | 'SKIPRT0002'                                  |
+| `nik`              | Nomor Induk Kependudukan Dokter                          | '3313096403900009'                            |
+| `nadokter`         | Nama Dokter                                              | 'apt. Aditya Pradhana, S.Farm.'               |
+| `jenis_kerja_sama` | 1 jika Umum, 2 jika Spesialis                            | 1                                             |
+| `jenispegawai`     | 1 jika Dokter, 2 jika Perawat, 3 Jika Petugas Non-Medis  | 3                                             |
+| `nostr`            | Nomor STR (Surat Tanda Registrasi) Dokter                | ''                                            |
+| `hp`               | Nomor Handphone Dokter                                   | '082211223357'                                |
+| `status`           | Status Dokter (ON jika aktif, OFF jika tidak aktif)      | 'ON'                                          |
+| `satset_practitioner_id` | ID Resource Practitioner (Satu Sehat)              | '10001915884'                                 |
+
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_doktercabang` menggunakan `koders` dan `kodokter`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_doktercabang`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data   |
+|--------------------|----------------------------------------------------------|---------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'         |
+| `kodokter`         | Kode Dokter                                              | 'SKIPRT0002'  |
+
+**Jika sudah pernah mengirim Resource Location - Ruang Poli maka wajib insert ke satset_practitioners
+nama tabel: `satset_practitioners`**
+
+**Tabel: satset_practitioners**
+
+| Nama Kolom         | Keterangan                                               | Contoh Data            |
+|--------------------|----------------------------------------------------------|------------------------|
+| `id`               | ID Resource Practitioner (Satu Sehat)                    | '10001915884'          |
+| `attributes`       | Data Resource Practitioner (Satu Sehat)                  | '{"id":"10001915884"}' |
+
+**Tabel: users**
+**Sebelum melakukan insert, lakukan pengecekan dengan `users` menggunakan `name`. Jika sudah ada, jangan insert.**
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                     |
+|--------------------|----------------------------------------------------------|---------------------------------|
+| `name`             | Username                                                 | 'aditya'                        |
+| `is_apoteker`      | 1 Jika Apoteker, 0 Jika Tidak Apoteker                   | 1                               |
+| `koapoteker`       | Kode Apoteker                                            | 'SKIPRT0002'                    |
+
 ---
 
 ## 5. Resource Patient
@@ -297,7 +343,42 @@ nama tabel: `satset_practitioners`**
 
 ---
 
-## 7. Resource Condition, Observation, ClinicalImpression - Rekam Medis
+## 7. Observation - Triage (Emergency)
+
+### Contoh Data Triage:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_triage` menggunakan `noreg`. Jika sudah ada, jangan insert.**
+
+**Tabel Bantu:** `Skala Nyeri`
+
+| Kode  | Skala   | Keterangan         |
+|-------|---------|--------------------|
+| 1     | 0       | Tidak Nyeri        |
+| 2     | 2       | Nyeri Ringan       |
+| 3     | 4       | Nyeri Sedang       |
+| 4     | 6       | Nyeri Sedang       |
+| 5     | 8       | Nyeri Berat        |
+| 6     | 10      | Nyeri Sangat Berat |
+
+**Tabel:** `tbl_triage`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
+| `noreg`            | Nomor Registrasi                                         | 'SKIRJ20250000078'                            |
+| `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
+| `tanggal`          | Tanggal Triage                                           | '2025-04-25 10:30:00'                         |
+| `jam`              | Jam Triage                                               | '10:30:00'                                    |
+| `kodokter`         | Kode DPJP (Dokter Penanggung Jawab Pelayanan)            | 'SKIDR00001'                                  |
+| `perawat`          | Kode Perawat (Perawat Penanggung Jawab Pelayanan)        | 'SKIPRT0001'                                  |
+| `sarana_datang`    | Prognosa ("Ambulance" jika "Ambulance", "Mobil" jika "Mobil", "Motor" jika "Motor", "Lain-lain" jika "Lain-lain") | 'Ambulance' |
+| `kondisi_pasien_tiba` | Prognosa ("Resusitasi" jika "Resusitasi", "Emergency" jika "Emergency", "Urgent" jika "Urgent", "Less Urgent" jika "Less Urgent", "Non Urgent" jika "Non Urgent", "Death On Arrival" jika "Death On Arrival") | 'Urgent' |
+| `nyeri`            |                                                          | 1                                             |
+| `frekuensinyeri`   | Prognosa (0 jika "Tidak Ada", 1 jika "Jarang", 2 jika "Hilang Timbul", 3 jika "Terus Menerus") | 2       |
+| `level_kesadaran`  | Prognosa ("Alert" jika "Sadar Baik / Alert", "Voice" jika "Respon dengan Kata-kata / Voice", "Pain" jika "Hanya Respon Jika Dirangsang / Pain", "Unresponsive" jika "Pasien Tidak Sadar / Unresponsive", "Gelisah" jika "Bingung / Gelisah", "Acute Confusional State" jika "Acute Confusional State") | 'Voice'          |
+
+---
+
+## 8. Resource Condition, Observation, QuestionnaireResponse, ClinicalImpression - Rekam Medis (Outpatient dan Emergency)
 
 ### Contoh Data Rekam Medis:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_rekammedisrs` menggunakan `noreg`. Jika sudah ada, jangan insert.**
@@ -370,7 +451,7 @@ Jika Alergi lebih dari 1
 |-----------------------------------|----------------------------------------------------------|-----------------------------------------------|
 | `batu_saluran_kemih`              | Batu Saluran Kemih (1 jika Ya, 0 jika Tidak)             | "1"                                           |
 | `lokasi_batu`                     | Lokasi Batu ("18639004\|Left kidney" jika Left kidney, "9846003\|Right kidney" jika Right kidney, "25308007\|Right ureter" jika Right ureter, "26559004\|Left ureter" jika Left ureter, "89837001\|Urinary bladder" jika Urinary bladder) | "18639004\|Left kidney" |
-| `derajat_hidronefrosis`           | Derajat Hidronefrosis ("258351006\|Grade 1" jika Grade 1, "258352004\|Grade 2" jika Grade 2, "258353009\|Grade 3" jika Grade 3, "258354003\|Grade 4" jika Grade 4, "OV000352\|Tidak ada hidronefrosis" jika Tidak ada hidronefrosis) | "258351006\|Grade 1" |
+| `derajat_hidronefrosis`           | Derajat Hidronefrosis ("258351006\|Grade 1" jika Grade 1, "258352004\|Grade 2" jika Grade 2, "258353009\|Grade 3" jika Grade 3, "258354003\|Grade 4" jika Grade 4, "OV000352\|Tidak ada hidronefrosis" jika Tidak ada hidronefrosis) | "258351006|Grade 1" |
 | `keparahan_batu_saluran_kemih`    | Keparahan Batu Saluran Kemih ("68566005\|Urinary tract infection" jika Urinary tract infection, "55189008\|Non-infected" jika Non-infected, "709044004\|Chronic kidney disease" jika Chronic kidney disease) | "709044004\|Chronic kidney disease" |
 
 **Format Data Anamenesis Uronefrologi dan Pemeriksaan Uronefrologi**
@@ -389,7 +470,8 @@ Selain itu:
 
 '{"status_mental":"Marah","status_mental_lainnya":null}'
 
-**Tabel:** `tbl_rekammedisrs`
+
+**Tabel:** `tbl_rekammedisrs` **(Outpatient)**
 
 | Nama Kolom         | Keterangan                                               | Contoh Data                                   |
 |--------------------|----------------------------------------------------------|-----------------------------------------------|
@@ -422,7 +504,114 @@ Selain itu:
 | `keluhanawal`      | Keluhan Utama                                            | 'Penurunan output urin'                       |
 | `kondisi_pulang`   | Kondisi Pulang ("KELUAR001" jika "SEMBUH", "KELUAR002" jika "BELUM SEMBUH", "KELUAR003" jika "MENINGGAL <\48 JAM DALAM OPNAME", "KELUAR004" jika "MENINGGAL >\48 JAM DALAM OPNAME", "KELUAR005" jika "ATAS PERMINTAAN SENDIRI", "KELUAR006" jika "DIRUJUK", "KELUAR007" jika "MENERUSKAN DENGAN RAWAT JALAN", "KELUAR008" jika "MENERUSKAN DENGAN RAWAT INAP") | 'KELUAR002' |
 
-## 8. Resource Condition - Diagnosa
+**Tabel Bantu:** `Skrining Batuk`
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "1.1"                                                          |
+| `text`     | Pertanyaan                            | "Apakah memiliki riwayat demam?"                               |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "1.2"                                                          |
+| `text`     | Pertanyaan                            | "Apakah berkeringat pada malam hari walaupun tanpa aktivitas?" |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "1.3"                                                          |
+| `text`     | Pertanyaan                            | "Apakah memiliki riwayat berpergian dari daerah wabah?"        |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "1.4"                                                          |
+| `text`     | Pertanyaan                            | "Apakah memiliki riwayat pemakaian obat jangka panjang?"       |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "1.5"                                                          |
+| `text`     | Pertanyaan                            | "Apakah memiliki riwayat BB turun tanpa sebab yang diketahui?" |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+**Format Data Skrining Batuk**
+
+'[{"linkId":"1.1","text":"Apakah memiliki riwayat demam?","answer":"0"},{"linkId":"1.2","text":"Apakah berkeringat pada malam hari walaupun tanpa aktivitas?","answer":"0"},{"linkId":"1.3","text":"Apakah memiliki riwayat berpergian dari daerah wabah?","answer":"0"},{"linkId":"1.4","text":"Apakah memiliki riwayat pemakaian obat jangka panjang?","answer":"0"},{"linkId":"1.5","text":"Apakah memiliki riwayat BB turun tanpa sebab yang diketahui?","answer":"0"}]'
+
+**Tabel Bantu:** `Skrining Gizi`
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "2.1"                                                          |
+| `text`     | Pertanyaan                            | "Apakah ada  penurunan BB dalam waktu 6 bulan terakhir?"       |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "2.2"                                                          |
+| `text`     | Pertanyaan                            | "Apakah ada penurunan asupan makanan karena nafsu makan berkurang?" |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "2.3"                                                          |
+| `text`     | Pertanyaan                            | "Apakah mengalami gejala gastrointestinal (seperti mual, muntah, diare, anorexia)?" |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "2.4"                                                          |
+| `text`     | Pertanyaan                            | "Apakah memiliki faktor pemberat (komorbid)?"                  |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+| Nama Kolom | Keterangan                            | Contoh Data                                                    |
+|------------|---------------------------------------|----------------------------------------------------------------|
+| `linkId`   | Nomor                                 | "2.5"                                                          |
+| `text`     | Pertanyaan                            | "Apakah ada penurunan kapasitas fungsional?"                   |
+| `answer`   | Jawaban ("1" jika Ya, "0" jika Tidak) | "0"                                                            |
+
+**Format Data Skrining Gizi**
+
+'[{"linkId":"2.1","text":"Apakah ada  penurunan BB dalam waktu 6 bulan terakhir?","answer":"0"},{"linkId":"2.2","text":"Apakah ada penurunan asupan makanan karena nafsu makan berkurang?","answer":"0"},{"linkId":"2.3","text":"Apakah mengalami gejala gastrointestinal (seperti mual, muntah, diare, anorexia)?","answer":"0"},{"linkId":"2.4","text":"Apakah memiliki faktor pemberat (komorbid)?","answer":"0"},{"linkId":"2.5","text":"Apakah ada penurunan kapasitas fungsional?","answer":"0"}]'
+
+**Tabel:** `tbl_rekammedisrs` **(Emergency)**
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
+| `noreg`            | Nomor Registrasi                                         | 'SKIRJ20250000078'                            |
+| `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
+| `kodepos`          | Kode Unit Poli                                           | 'PUGD'                                        |
+| `koperawat`        | Kode Perawat (Perawat Penanggung Jawab Pelayanan)        | 'SKIPRT0001'                                  |
+| `tglperiksa`       | Tanggal Periksa Perawat                                  | '2025-04-25 10:30:00'                         |
+| `jam`              | Jam Periksa Perawat                                      | '10:30:00'                                    |
+| `kodokter`         | Kode DPJP (Dokter Penanggung Jawab Pelayanan)            | 'SKIDR00001'                                  |
+| `tglkonsul`        | Tanggal Periksa DPJP                                     | '2025-04-25 10:35:00'                         |
+| `jamdikonsul`      | Jam Periksa DPJP                                         | '10:35:00'                                    |
+| `alergi_lingkungan`| Alergi Lingkungan                                        | '[{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Debu Rumah","keterangan":null}]' |
+| `alergi_makanan`   | Alergi Makanan                                           | '[{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Alergi daging bebek","keterangan":null}]' |
+| `alergi_obat`      | Alergi Obat                                              | '[{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Azitromicin","keterangan":null},{"allergy_intolerance_id":null,"code":null,"display":null,"alergi":"Paracetamol","keterangan":null}]' |
+| `tdarah`           | Tekanan Darah Sistole                                    | 110                                           |
+| `tdarah1`          | Tekanan Darah Diastole                                   | 90                                            |
+| `nadi`             | Nadi                                                     | 90                                            |
+| `nafas`            | Respiratory Rate                                         | 30                                            |
+| `suhu`             | Suhu                                                     | 40                                            |
+| `oksigen`          | SpO2                                                     | 98                                            |
+| `tinggibadan`      | Tinggi Badan                                             | 170                                           |
+| `beratbadan`       | Berat Badan                                              | 54                                            |
+| `bmi`              | Nilai IMT                                                | 18.68                                         |
+| `bmiresult`        | Hasil IMT                                                | 'Normal Weight'                               |
+| `riwayat_psikososial_dan_spiritual_data` | Status Mental                      | '{"status_mental":"Marah","status_mental_lainnya":null}' |
+| `prognosa`         | Prognosa ("02" jika "Bonam (Baik)", "03" jika "Malam (Buruk/Jelek)", "04" jika "Dubia Ad Sanam/Bolam (Tidak tentu/Ragu-ragu, Cenderung Sembuh/Baik)", "05" jika "Dubia Ad Malam (Tidak tentu/Ragu-ragu, Cenderung Buruk/Jelek)") | '03' |
+| `keluhanawal`      | Keluhan Utama                                            | 'Penurunan output urin'                       |
+| `resiko_dekubitus` | Resiko Dekubitus (1 jika Ya, 0 jika Tidak)               | 0                                             |
+| `skrining_batuk`   | Pemeriksaan Skrining Batuk                               | '[{"linkId":"1.1","text":"Apakah memiliki riwayat demam?","answer":"0"},{"linkId":"1.2","text":"Apakah berkeringat pada malam hari walaupun tanpa aktivitas?","answer":"0"},{"linkId":"1.3","text":"Apakah memiliki riwayat berpergian dari daerah wabah?","answer":"0"},{"linkId":"1.4","text":"Apakah memiliki riwayat pemakaian obat jangka panjang?","answer":"0"},{"linkId":"1.5","text":"Apakah memiliki riwayat BB turun tanpa sebab yang diketahui?","answer":"0"}]'                                            |
+| `skrining_gizi`    | Pemeriksaan Skrining Gizi                                | '[{"linkId":"2.1","text":"Apakah ada  penurunan BB dalam waktu 6 bulan terakhir?","answer":"0"},{"linkId":"2.2","text":"Apakah ada penurunan asupan makanan karena nafsu makan berkurang?","answer":"0"},{"linkId":"2.3","text":"Apakah mengalami gejala gastrointestinal (seperti mual, muntah, diare, anorexia)?","answer":"0"},{"linkId":"2.4","text":"Apakah memiliki faktor pemberat (komorbid)?","answer":"0"},{"linkId":"2.5","text":"Apakah ada penurunan kapasitas fungsional?","answer":"0"}]'                                            |
+| `kondisi_pulang`   | Kondisi Pulang ("KELUAR001" jika "SEMBUH", "KELUAR002" jika "BELUM SEMBUH", "KELUAR003" jika "MENINGGAL <\48 JAM DALAM OPNAME", "KELUAR004" jika "MENINGGAL >\48 JAM DALAM OPNAME", "KELUAR005" jika "ATAS PERMINTAAN SENDIRI", "KELUAR006" jika "DIRUJUK", "KELUAR007" jika "MENERUSKAN DENGAN RAWAT JALAN", "KELUAR008" jika "MENERUSKAN DENGAN RAWAT INAP") | 'KELUAR002' |
+
+## 9. Resource Condition - Diagnosa
 
 ### Contoh Data Diagnosa Penyakit Ginjal Kronis (CKD):
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_icdtr` menggunakan `noreg` dan `icdcode`. Jika sudah ada, jangan insert.**
@@ -450,7 +639,7 @@ Selain itu:
 | `icdcode`          | Kode ICD 10                                              | 'N20.0'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
 
-## 9. Resource Procedure - Tindakan
+## 10. Resource Procedure - Tindakan
 
 ### Contoh Data Tindakan Hemodialysis:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_icdtr` menggunakan `noreg` dan `icdcode`. Jika sudah ada, jangan insert.**
@@ -478,7 +667,7 @@ Selain itu:
 | `icdcode`          | Kode ICD 9                                               | '98.51'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
 
-## 10. Resource MedicationRequest - E-Resep
+## 11. Resource MedicationRequest - E-Resep
 
 ### Contoh Data Medication PARACETAMOL 500MG TAB KF:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_orderperiksa` dan `tbl_eresep` menggunakan `orderno`. Jika sudah ada, jangan insert.**
@@ -519,7 +708,7 @@ Selain itu:
 | `aturanpakai`  | Aturan Pakai Obat                                       | '3 X 1'                    |
 | `kronis`       | Indikasi Obat untuk Penyakit Kronis (1 = Ya, 0 = Tidak) | 0                          |
 
-## 11. Resource QuestionnaireResponse - Telaah Resep
+## 12. Resource QuestionnaireResponse - Telaah Resep
 
 ### Contoh Data Telaah:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_apotelaah` menggunakan `orderno`. Jika sudah ada, jangan insert.**
@@ -535,7 +724,7 @@ Selain itu:
 | `resepno`      | Nomor Resep Terkait (kosong jika belum dikaitkan langsung ke `resepno`)          | ''                                         |
 | `ok`           | Status Penilaian (1 = Sesuai, 0 = Tidak Sesuai)                                  | 1                                          |
 
-## 12. Resource MedicationDispense - Farmasi Penjualan
+## 13. Resource MedicationDispense - Farmasi Penjualan
 
 ### Contoh Data Medication PARACETAMOL 500MG TAB KF:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_apoposting`, `tbl_apohresep` dan `tbl_apodresep` menggunakan `resepno`. Jika sudah ada, jangan insert.**
