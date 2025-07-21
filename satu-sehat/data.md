@@ -389,7 +389,7 @@ nama tabel: `satset_practitioners`**
 | `perawat`          | Kode Perawat (Perawat Penanggung Jawab Pelayanan)        | 'SKIPRT0001'                                  |
 | `sarana_datang`    | Prognosa ("Ambulance" jika "Ambulance", "Mobil" jika "Mobil", "Motor" jika "Motor", "Lain-lain" jika "Lain-lain") | 'Ambulance' |
 | `kondisi_pasien_tiba` | Prognosa ("Resusitasi" jika "Resusitasi", "Emergency" jika "Emergency", "Urgent" jika "Urgent", "Less Urgent" jika "Less Urgent", "Non Urgent" jika "Non Urgent", "Death On Arrival" jika "Death On Arrival") | 'Urgent' |
-| `nyeri`            |                                                          | 1                                             |
+| `nyeri`            | Skala Nyeri (untuk cara pengisian lihat ditabel bantu diatas) | 1                                             |
 | `frekuensinyeri`   | Prognosa (0 jika "Tidak Ada", 1 jika "Jarang", 2 jika "Hilang Timbul", 3 jika "Terus Menerus") | 2       |
 | `level_kesadaran`  | Prognosa ("Alert" jika "Sadar Baik / Alert", "Voice" jika "Respon dengan Kata-kata / Voice", "Pain" jika "Hanya Respon Jika Dirangsang / Pain", "Unresponsive" jika "Pasien Tidak Sadar / Unresponsive", "Gelisah" jika "Bingung / Gelisah", "Acute Confusional State" jika "Acute Confusional State") | 'Voice'          |
 
