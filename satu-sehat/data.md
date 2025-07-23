@@ -2,20 +2,21 @@
 
 ## Daftar Isi
 
-- [Perkenalan](#-perkenalan)
+- [Perkenalan](#perkenalan)
 - [1. Resource Organization - Provider](#1-resource-organization---provider)
 - [2. Resource Organization - Department](#2-resource-organization---department)
-- [3. Resource Location - Ruang Poli](#3-resource-location---ruang-poli)
+- [3. Resource Location - Ruang Poli, Bangsal Inap, Ruang Inap dan Kamar Inap](#3-resource-location---ruang-poli-bangsal-inap-ruang-inap-dan-kamar-inap)
 - [4. Resource Practitioner - Dokter dan Perawat](#4-resource-practitioner---dokter-dan-perawat)
 - [5. Resource Patient](#5-resource-patient)
-- [6. Resource Encounter](#6-resource-encounter)
+- [6. Resource Encounter - Kunjungan (Outpatient, Emergency dan Inpatient)](#6-resource-encounter---Kunjungan-outpatient-emergency-dan-inpatient))
 - [7. Resource Observation - Triage (Emergency)](#7-resource-observation---triage-emergency)
-- [8. Resource Condition, Observation, QuestionnaireResponse, ClinicalImpression - Rekam Medis (Outpatient dan Emergency)](#8-resource-condition-observation-questionnaireresponse-clinicalimpression---rekam-medis-outpatient-dan-emergency)
-- [9. Resource Condition - Diagnosa](#9-resource-condition---diagnosa)
-- [10. Resource Procedure - Tindakan](#10-resource-procedure---tindakan)
-- [11. Resource MedicationRequest - E-Resep](#11-resource-medicationrequest---e-resep)
-- [12. Resource QuestionnaireResponse - Telaah Resep](#12-resource-questionnaireresponse---telaah-resep)
-- [13. Resource MedicationDispense - Farmasi Penjualan](#13-resource-medicationdispense---farmasi-penjualan)
+- [8. Resource Condition, Observation, QuestionnaireResponse, ClinicalImpression - Rekam Medis (Outpatient, Emergency dan Inpatient)](#8-resource-condition-observation-questionnaireresponse-clinicalimpression---rekam-medis-outpatient-emergency-dan-inpatient)
+- [9. Resource Observation - TTV (Inpatient)](#9-resource-observation---ttv-inpatient)
+- [10. Resource Condition - Diagnosa](#10-resource-condition---diagnosa)
+- [11. Resource Procedure - Tindakan](#11-resource-procedure---tindakan)
+- [12. Resource MedicationRequest - E-Resep](#12-resource-medicationrequest---e-resep)
+- [13. Resource QuestionnaireResponse - Telaah Resep](#13-resource-questionnaireresponse---telaah-resep)
+- [14. Resource MedicationDispense - Farmasi Penjualan](#14-resource-medicationdispense---farmasi-penjualan)
 
 ## Perkenalan
 
@@ -139,16 +140,18 @@ Dokumentasi ini menjelaskan tentang bagaimana cara melakukan insert data ke dala
 
 ---
 
-## 3. Resource Location - Ruang Poli
+## 3. Resource Location - Ruang Poli, Bangsal Inap, Ruang Inap dan Kamar Inap
 
-### Contoh Data Ruang Spesialis Urologi:
+### Contoh Data Ruang Poli Spesialis Urologi:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_ruangpoli` menggunakan `koderuang`. Jika sudah ada, jangan insert.**
 
 **Tabel:** `tbl_ruangpoli`
+
 | Nama Kolom         | Keterangan                                               | Contoh Data                                  |
 |--------------------|----------------------------------------------------------|----------------------------------------------|
 | `koders`           | Kode Rumah Sakit                                         | 'SKI'                                        |
-| `kopoli`           | Kode Unit Poli                                           | 'PURO'                                       |
+| `kopoli`           | Kode Poli                                                | 'PURO'                                       |
+| `kodeunit`         | Kode Unit Satu Sehat                                     | 'SKI-GT1-B1-P1-URO'                          |
 | `koderuang`        | Kode Ruang                                               | '01PURL'                                     |
 | `namaruang`        | Nama Ruang                                               | 'Ruang Spesialis Urologi'                    |
 | `description`      | Deskripsi Ruang                                          | 'Ruang konsultasi dan tindakan urologi SKI'  |
@@ -164,8 +167,89 @@ Dokumentasi ini menjelaskan tentang bagaimana cara melakukan insert data ke dala
 | Nama Kolom         | Keterangan                                               | Contoh Data                                     |
 |--------------------|----------------------------------------------------------|-------------------------------------------------|
 | `id`               | ID Resource Location (Satu Sehat)                        | '46a18b96-d8bb-48f4-a9e0-1b79ff30fa79'          |
-| `attributes`       | Data Resource Location (Satu Sehat)                      | '{"id":"46a18b96-d8bb-48f4-a9e0-1b79ff30fa79"}'|
+| `attributes`       | Data Resource Location (Satu Sehat)                      | '{"id":"46a18b96-d8bb-48f4-a9e0-1b79ff30fa79"}' |
 
+### Contoh Data Bangsal Inap:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_bangsal` menggunakan `bangsalid`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_bangsal`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                  |
+|--------------------|----------------------------------------------------------|----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                        |
+| `kodeunit`         | Kode Unit Satu Sehat                                     | 'SKI-GB1-R-RI-SDW'                           |
+| `bangsalid`        | Kode Bangsal                                             | 'BL00000001'                                 |
+| `nama_bangsal`     | Nama Bangsal                                             | 'SADEWA'                                     |
+| `deskripsi`        | Deskripsi Bangsal                                        | 'BANGSAL RAWAT INAP PASIEN DEWASA DAN ANAK SADEWA - LANTAI 1 - GEDUNG BARAT'  |
+| `longitude`        | Titik Koordinat Longitude Bangsal                        | '-4.807.779.235.890.210'                     |
+| `latitude`         | Titik Koordinat Latitude Bangsal                         | '10.536.385.747.905.800'                     |
+| `altitude`         | Titik Koordinat Altitude Bangsal                         | '0'                                          |
+| `aktif`            | Status Aktif (1 jika Aktif, 0 jika Tidak Aktif)          | 1                                            |
+| `satset_location_id`| ID Resource Location (Satu Sehat)                       | 'X'                                          |
+
+**Jika sudah pernah mengirim Resource Location - Bangsal Inap maka wajib insert ke `satset_locations`**
+
+**Tabel:** `satset_locations`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                     |
+|--------------------|----------------------------------------------------------|-------------------------------------------------|
+| `id`               | ID Resource Location (Satu Sehat)                        | 'X'                                             |
+| `attributes`       | Data Resource Location (Satu Sehat)                      | '{"id":"X"}'                                    |
+
+### Contoh Data Ruang Inap:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_ruang` menggunakan `koderuang`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_ruang`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                  |
+|--------------------|----------------------------------------------------------|----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                        |
+| `bangsalid`        | Kode Bangsal                                             | 'BL00000001'                                 |
+| `kodeunit`         | Kode Unit Satu Sehat                                     | 'SKI-GB1-R-RI-SDW1'                          |
+| `koderuang`        | Kode Ruang                                               | 'INAPB00177'                                 |
+| `namaruang`        | Nama Ruang                                               | 'SADEWA 1'                                   |
+| `fasilitas`        | Deskripsi Ruang                                          | 'RUANG RAWAT INAP PASIEN DEWASA DAN ANAK SADEWA - LANTAI 1 - GEDUNG BARAT'  |
+| `longitude`        | Titik Koordinat Longitude Ruang                          | '-4.807.779.235.890.210'                     |
+| `latitude`         | Titik Koordinat Latitude Ruang                           | '10.536.385.747.905.800'                     |
+| `altitude`         | Titik Koordinat Altitude Ruang                           | '0'                                          |
+| `satset_location_id`| ID Resource Location (Satu Sehat)                       | 'X'                                          |
+
+**Jika sudah pernah mengirim Resource Location - Bangsal Inap maka wajib insert ke `satset_locations`**
+
+**Tabel:** `satset_locations`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                     |
+|--------------------|----------------------------------------------------------|-------------------------------------------------|
+| `id`               | ID Resource Location (Satu Sehat)                        | 'X'                                             |
+| `attributes`       | Data Resource Location (Satu Sehat)                      | '{"id":"X"}'                                    |
+
+### Contoh Data Kamar Inap:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_kamar` menggunakan `kodekamar`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_kamar`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                  |
+|--------------------|----------------------------------------------------------|----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                        |
+| `koderuang`        | Kode Ruang                                               | 'INAPB00177'                                 |
+| `kodeunit`         | Kode Unit Satu Sehat                                     | 'SKI-GB1-RI-B1-SDW1-VIP'                     |
+| `kodekamar`        | Kode Kamar                                               | 'INAPB0017710'                               |
+| `namakamar`        | Nama Kamar                                               | 'TT - 01'                                    |
+| `description`      | Deskripsi Kamar                                          | 'Tempat Tidur 1 - Sadewa 1 - Kelas VIP - Lantai 1 - Gedung Barat'  |
+| `longitude`        | Titik Koordinat Longitude Kamar                          | '-4.807.779.235.890.210'                     |
+| `latitude`         | Titik Koordinat Latitude Kamar                           | '10.536.385.747.905.800'                     |
+| `altitude`         | Titik Koordinat Altitude Kamar                           | '0'                                          |
+| `aktif`            | Status Aktif (1 jika Aktif, 0 jika Tidak Aktif)          | 1                                            |
+| `satset_location_id`| ID Resource Location (Satu Sehat)                       | 'X'                                          |
+
+**Jika sudah pernah mengirim Resource Location - Bangsal Inap maka wajib insert ke `satset_locations`**
+
+**Tabel:** `satset_locations`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                     |
+|--------------------|----------------------------------------------------------|-------------------------------------------------|
+| `id`               | ID Resource Location (Satu Sehat)                        | 'X'                                             |
+| `attributes`       | Data Resource Location (Satu Sehat)                      | '{"id":"X"}'                                    |
 
 ---
 
@@ -334,9 +418,9 @@ nama tabel: `satset_practitioners`**
 
 ---
 
-## 6. Resource Encounter
+## 6. Resource Encounter - Kunjungan (Outpatient, Emergency dan Inpatient)
 
-### Contoh Data Encounter:
+### Contoh Data Encounter (Outpatient dan Emergency):
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_regist` menggunakan `noreg`. Jika sudah ada, jangan insert.**
 
 **Tabel:** `tbl_regist`
@@ -352,10 +436,35 @@ nama tabel: `satset_practitioners`**
 | `tujuan`           | Tujuan (1 jika Rawat Jalan, 2 jika Rawat Inap)           | 1                                             |
 | `kodepos`          | Kode Unit Poli                                           | 'PURO'                                        |
 | `kodokter`         | Kode DPJP (Dokter Penanggung Jawab Pelayanan)            | 'SKIDR00001'                                  |
-| `koderuang`        | Kode Ruang                                               | 1                                             |
+| `koderuang`        | Id Ruang                                                 | 1                                             |
 | `keluar`           | Status Keluar                                            | 1                                             |
 | `closerm`          | Status Selesai Pelayanan                                 | 1                                             |
 | `tglkeluar`        | Tanggal Keluar                                           | '2025-04-24 11:05:00'                         |
+| `jamkeluar`        | Jam Keluar                                               | '11:05:00'                                    |
+
+---
+
+### Contoh Data Encounter (Inpatient):
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_regist` menggunakan `noreg`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_regist`
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
+| `noreg`            | Nomor Registrasi                                         | 'SKIRI20250000079'                            |
+| `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
+| `tglmasuk`         | Tanggal Masuk                                            | '2025-04-25 11:05:00'                         |
+| `jam`              | Jam Masuk                                                | '11:05:00'                                    |
+| `jenispas`         | Jenis Pasien (PAS1 jika Perorangan, PAS2 jika Asuransi)  | 'PAS1'                                        |
+| `tujuan`           | Tujuan (1 jika Rawat Jalan, 2 jika Rawat Inap)           | 2                                             |
+| `kodepos`          | Kode Unit Poli (Kosongkan jika Rawat Inap)               | ''                                            |
+| `kodokter`         | Kode DPJP (Dokter Penanggung Jawab Pelayanan)            | 'SKIDR00001'                                  |
+| `koderuang`        | Kode Ruang                                               | 'INAPB00177'                                  |
+| `kodekamar`        | Kode Kamar                                               | 'INAPB0017710'                                |
+| `keluar`           | Status Keluar                                            | 1                                             |
+| `closerm`          | Status Selesai Pelayanan                                 | 1                                             |
+| `tglkeluar`        | Tanggal Keluar                                           | '2025-04-29 11:05:00'                         |
 | `jamkeluar`        | Jam Keluar                                               | '11:05:00'                                    |
 
 ---
@@ -395,7 +504,7 @@ nama tabel: `satset_practitioners`**
 
 ---
 
-## 8. Resource Condition, Observation, QuestionnaireResponse, ClinicalImpression - Rekam Medis (Outpatient dan Emergency)
+## 8. Resource Condition, Observation, QuestionnaireResponse, ClinicalImpression - Rekam Medis (Outpatient, Emergency dan Inpatient)
 
 ### Contoh Data Rekam Medis:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_rekammedisrs` menggunakan `noreg`. Jika sudah ada, jangan insert.**
@@ -521,6 +630,8 @@ Selain itu:
 | `keluhanawal`      | Keluhan Utama                                            | 'Penurunan output urin'                       |
 | `kondisi_pulang`   | Kondisi Pulang ("KELUAR001" jika "SEMBUH", "KELUAR002" jika "BELUM SEMBUH", "KELUAR003" jika "MENINGGAL <\48 JAM DALAM OPNAME", "KELUAR004" jika "MENINGGAL >\48 JAM DALAM OPNAME", "KELUAR005" jika "ATAS PERMINTAAN SENDIRI", "KELUAR006" jika "DIRUJUK", "KELUAR007" jika "MENERUSKAN DENGAN RAWAT JALAN", "KELUAR008" jika "MENERUSKAN DENGAN RAWAT INAP") | 'KELUAR002' |
 
+---
+
 **Tabel Bantu:** `Skrining Batuk`
 
 | Nama Kolom | Keterangan                            | Contoh Data                                                    |
@@ -626,9 +737,56 @@ Selain itu:
 | `resiko_dekubitus` | Resiko Dekubitus (1 jika Ya, 0 jika Tidak)               | 0                                             |
 | `skrining_batuk`   | Pemeriksaan Skrining Batuk                               | '[{"linkId":"1.1","text":"Apakah memiliki riwayat demam?","answer":"0"},{"linkId":"1.2","text":"Apakah berkeringat pada malam hari walaupun tanpa aktivitas?","answer":"0"},{"linkId":"1.3","text":"Apakah memiliki riwayat berpergian dari daerah wabah?","answer":"0"},{"linkId":"1.4","text":"Apakah memiliki riwayat pemakaian obat jangka panjang?","answer":"0"},{"linkId":"1.5","text":"Apakah memiliki riwayat BB turun tanpa sebab yang diketahui?","answer":"0"}]'                                            |
 | `skrining_gizi`    | Pemeriksaan Skrining Gizi                                | '[{"linkId":"2.1","text":"Apakah ada  penurunan BB dalam waktu 6 bulan terakhir?","answer":"0"},{"linkId":"2.2","text":"Apakah ada penurunan asupan makanan karena nafsu makan berkurang?","answer":"0"},{"linkId":"2.3","text":"Apakah mengalami gejala gastrointestinal (seperti mual, muntah, diare, anorexia)?","answer":"0"},{"linkId":"2.4","text":"Apakah memiliki faktor pemberat (komorbid)?","answer":"0"},{"linkId":"2.5","text":"Apakah ada penurunan kapasitas fungsional?","answer":"0"}]'                                            |
+| `kondisi_pulang`   | Kondisi Pulang ("KELUAR001" jika "SEMBUH", "KELUAR002" jika "BELUM SEMBUH", "KELUAR003" jika "MENINGGAL <\48 JAM DALAM OPNAME", "KELUAR004" jika "MENINGGAL >\48 JAM DALAM OPNAME", "KELUAR005" jika "ATAS PERMINTAAN SENDIRI", "KELUAR006" jika "DIRUJUK", "KELUAR007" jika "MENERUSKAN DENGAN RAWAT JALAN", "KELUAR008" jika "MENERUSKAN DENGAN RAWAT INAP") | 'KELUAR008' |
+
+**Tabel:** `tbl_darirj` **(Jika Di Transfer Ke Rawat Inap)**
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `noreg`            | Nomor Registrasi IGD/Rawat Jalan                         | 'SKIRJ20250000078'                            |
+| `noreginap`        | Nomor Registrasi Rawat Inap                              | 'SKIRI20250000079'                            |
+| `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
+| `tglmasuk`         | Tanggal Periksa Perawat                                  | '2025-04-25 11:05:00'                         |
+| `jammasuk`         | Jam Periksa Perawat                                      | '11:05:00'                                    |
+| `kodokter`         | Kode DPJP (Dokter Penanggung Jawab Pelayanan)            | 'SKIDR00001'                                  |
+| `kodepos`          | Kode Unit Poli                                           | 'PUGD'                                        |
+
+---
+
+**Tabel:** `tbl_rekammedisrs` **(Inpatient)**
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `koders`           | Kode Rumah Sakit                                         | 'SKI'                                         |
+| `noreg`            | Nomor Registrasi                                         | 'SKIRI20250000079'                            |
+| `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
+| `tglperiksa`       | Tanggal Periksa Perawat                                  | '2025-04-25 12:30:00'                         |
+| `jam`              | Jam Periksa Perawat                                      | '12:30:00'                                    |
+| `kodokter`         | Kode DPJP (Dokter Penanggung Jawab Pelayanan)            | 'SKIDR00001'                                  |
+| `tglkonsul`        | Tanggal Periksa DPJP                                     | '2025-04-25 12:30:00'                         |
+| `jamdikonsul`      | Jam Periksa DPJP                                         | '12:30:00'                                    |
 | `kondisi_pulang`   | Kondisi Pulang ("KELUAR001" jika "SEMBUH", "KELUAR002" jika "BELUM SEMBUH", "KELUAR003" jika "MENINGGAL <\48 JAM DALAM OPNAME", "KELUAR004" jika "MENINGGAL >\48 JAM DALAM OPNAME", "KELUAR005" jika "ATAS PERMINTAAN SENDIRI", "KELUAR006" jika "DIRUJUK", "KELUAR007" jika "MENERUSKAN DENGAN RAWAT JALAN", "KELUAR008" jika "MENERUSKAN DENGAN RAWAT INAP") | 'KELUAR002' |
 
-## 9. Resource Condition - Diagnosa
+## 9. Resource Observation - TTV (Inpatient)
+
+### Contoh Data TTV:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_tanda_vital` menggunakan `noreg` dan `tanggal`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_tanda_vital` **(Inpatient)**
+
+| Nama Kolom         | Keterangan                                               | Contoh Data                                   |
+|--------------------|----------------------------------------------------------|-----------------------------------------------|
+| `tanggal`          | Tanggal Periksa Perawat                                  | '2025-04-26 10:30:00'                         |
+| `noreg`            | Nomor Registrasi                                         | 'SKIRI20250000079'                            |
+| `rekmed`           | Nomor Rekam Medis Pasien                                 | '0000077'                                     |
+| `td1`              | Tekanan Darah Sistole                                    | 110                                           |
+| `td2`              | Tekanan Darah Diastole                                   | 90                                            |
+| `nadi`             | Nadi                                                     | 90                                            |
+| `rr`               | Respiratory Rate                                         | 30                                            |
+| `suhu`             | Suhu                                                     | 40                                            |
+| `spo2`             | SpO2                                                     | 98                                            |
+
+## 10. Resource Condition - Diagnosa
 
 ### Contoh Data Diagnosa Penyakit Ginjal Kronis (CKD):
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_icdtr` menggunakan `noreg` dan `icdcode`. Jika sudah ada, jangan insert.**
@@ -656,7 +814,7 @@ Selain itu:
 | `icdcode`          | Kode ICD 10                                              | 'N20.0'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
 
-## 10. Resource Procedure - Tindakan
+## 11. Resource Procedure - Tindakan
 
 ### Contoh Data Tindakan Hemodialysis:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_icdtr` menggunakan `noreg` dan `icdcode`. Jika sudah ada, jangan insert.**
@@ -684,7 +842,7 @@ Selain itu:
 | `icdcode`          | Kode ICD 9                                               | '98.51'                                       |
 | `utama`            | Status Utama (1 jika diagnosa utama, 0 jika bukan)       | 0                                             |
 
-## 11. Resource MedicationRequest - E-Resep
+## 12. Resource MedicationRequest - E-Resep
 
 ### Contoh Data Medication PARACETAMOL 500MG TAB KF:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_orderperiksa` dan `tbl_eresep` menggunakan `orderno`. Jika sudah ada, jangan insert.**
@@ -725,7 +883,7 @@ Selain itu:
 | `aturanpakai`  | Aturan Pakai Obat                                       | '3 X 1'                    |
 | `kronis`       | Indikasi Obat untuk Penyakit Kronis (1 = Ya, 0 = Tidak) | 0                          |
 
-## 12. Resource QuestionnaireResponse - Telaah Resep
+## 13. Resource QuestionnaireResponse - Telaah Resep
 
 ### Contoh Data Telaah:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_apotelaah` menggunakan `orderno`. Jika sudah ada, jangan insert.**
@@ -741,7 +899,7 @@ Selain itu:
 | `resepno`      | Nomor Resep Terkait (kosong jika belum dikaitkan langsung ke `resepno`)          | ''                                         |
 | `ok`           | Status Penilaian (1 = Sesuai, 0 = Tidak Sesuai)                                  | 1                                          |
 
-## 13. Resource MedicationDispense - Farmasi Penjualan
+## 14. Resource MedicationDispense - Farmasi Penjualan
 
 ### Contoh Data Medication PARACETAMOL 500MG TAB KF:
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_apoposting`, `tbl_apohresep` dan `tbl_apodresep` menggunakan `resepno`. Jika sudah ada, jangan insert.**
