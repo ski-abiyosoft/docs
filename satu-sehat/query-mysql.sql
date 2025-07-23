@@ -11,12 +11,12 @@ WHERE
 -- Data Resource Organization - Department
 DELETE FROM tbl_namapos
 WHERE
-    kodepos IN ('PURO', 'PUGD', 'IRJ');
+    kodepos IN ('PURO', 'PUGD', 'IRJ', 'IRI');
 
 DELETE FROM branch_department
 WHERE
     koders = 'SKI'
-    AND kodepos IN ('PURO', 'PUGD', 'IRJ');
+    AND kodepos IN ('PURO', 'PUGD', 'IRJ', 'IRI');
 
 DELETE FROM satset_organizations
 WHERE
@@ -24,17 +24,34 @@ WHERE
         '9e440888-2ab1-4f97-9b29-80eff581344f',
         'c9c04a20-da73-431a-a503-b5bddc7002b1',
         '434d6af4-0c31-4c67-9f7e-eb4dced5235c',
-        '0c4b3add-74a1-4ea7-839b-d5caf8e645f0'
+        '0c4b3add-74a1-4ea7-839b-d5caf8e645f0',
+        '1f73971b-fe3f-4c4e-8ea9-d57e9dcec63e'
     );
 
--- Data Resource Location - Ruang Poli
+-- Data Resource Location - Ruang Poli, Bangsal Inap, Ruang Inap dan Kamar Inap
 DELETE FROM tbl_ruangpoli
 WHERE
     koderuang IN ('01PURL', '01PIGD');
 
+DELETE FROM tbl_bangsal
+WHERE
+    bangsalid IN ('BL00000001');
+
+DELETE FROM tbl_bangsal
+WHERE
+    bangsalid IN ('BL00000001');
+
+DELETE FROM tbl_ruang
+WHERE
+    koderuang IN ('INAPB00177');
+
+DELETE FROM tbl_kamar
+WHERE
+    kodekamar IN ('INAPB0017710');
+
 DELETE FROM satset_locations
 WHERE
-    id IN ('46a18b96-d8bb-48f4-a9e0-1b79ff30fa79', '2cdbf6bb-fe51-42b2-a474-b2b9d0ba5613');
+    id IN ('46a18b96-d8bb-48f4-a9e0-1b79ff30fa79', '2cdbf6bb-fe51-42b2-a474-b2b9d0ba5613', '17d99116-af40-475f-adac-1b393020c3ec', '781e9eba-30d3-4166-adea-8e46e9c7e102', '3c30c892-3c71-445d-b2b5-da6460a466a0');
 
 -- Data Resource Practitioner - Dokter, Perawat dan Apoteker
 DELETE FROM tbl_dokter
@@ -65,35 +82,44 @@ WHERE
 -- Data Resource Encounter
 DELETE FROM tbl_regist
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 DELETE FROM tbl_kasir
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 -- Resource Observation - Triage (Emergency)
 DELETE FROM tbl_triage
 WHERE
     noreg IN ('SKIRJ20250000078');
 
--- Resource Condition, Observation, ClinicalImpression - Rekam Medis (Outpatient dan Emergency)
+-- Resource Condition, Observation, ClinicalImpression - Rekam Medis (Outpatient, Emergency dan Inpatient)
 DELETE FROM tbl_rekammedisrs
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
+
+DELETE FROM tbl_darirj
+WHERE
+    noreg IN ('SKIRJ20250000078');
+
+-- Resource Observation - TTV (Inpatient)
+DELETE FROM tbl_tanda_vital
+WHERE
+    noreg IN ('SKIRI20250000079');
 
 -- Resource Condition, Procedure - Diagnosa dan Tindakan
 DELETE FROM tbl_icdtr
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 -- Resource MedicationRequest - E-Resep
 DELETE FROM tbl_orderperiksa
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 DELETE FROM tbl_eresep
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 -- Resource QuestionnaireResponse - Telaah Resep
 DELETE FROM tbl_apotelaah
@@ -103,11 +129,11 @@ WHERE
 -- Resource MedicationDispense - Farmasi Penjualan
 DELETE FROM tbl_apoposting
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 DELETE FROM tbl_apohresep
 WHERE
-    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078');
+    noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
 DELETE FROM tbl_apodresep
 WHERE
@@ -251,7 +277,7 @@ VALUES
         '{"id":"434d6af4-0c31-4c67-9f7e-eb4dced5235c"}'
     );
 
--- Data Resource Organization - Department
+-- Data Resource Organization - Department Spesialis Urologi
 INSERT INTO
     tbl_namapos (
         kodepos,
@@ -293,6 +319,50 @@ VALUES
         3,
         'App\\Models\\SatSet\\BranchDepartment',
         '{"id":"0c4b3add-74a1-4ea7-839b-d5caf8e645f0"}'
+    );
+
+-- Data Resource Organization - Department Instalasi Rawat Inap
+INSERT INTO
+    tbl_namapos (
+        kodepos,
+        kodeunit,
+        namapost,
+        jenispost,
+        is_farmacy,
+        is_uronefrologi,
+        ifilter
+    )
+VALUES
+    (
+        'IRI',
+        'IRI',
+        'Instalasi Rawat Inap',
+        NULL,
+        0,
+        0,
+        ''
+    );
+
+INSERT INTO
+    branch_department (id, koders, kodepos)
+VALUES
+    (4, 'SKI', 'IRI');
+
+INSERT INTO
+    satset_organizations (
+        id,
+        type,
+        organizationable_id,
+        organizationable_type,
+        attributes
+    )
+VALUES
+    (
+        '1f73971b-fe3f-4c4e-8ea9-d57e9dcec63e',
+        'Poly',
+        4,
+        'App\\Models\\SatSet\\BranchDepartment',
+        '{"id":"1f73971b-fe3f-4c4e-8ea9-d57e9dcec63e"}'
     );
 
 -- Data Resource Location - Ruang Poli Urologi
@@ -369,6 +439,116 @@ VALUES
     (
         '46a18b96-d8bb-48f4-a9e0-1b79ff30fa79',
         '{"id":"46a18b96-d8bb-48f4-a9e0-1b79ff30fa79"}'
+    );
+
+-- Data Resource Location - Bangsal Inap
+INSERT INTO
+    tbl_bangsal (
+        koders,
+        kodeunit,
+        bangsalid,
+        nama_bangsal,
+        deskripsi,
+        longitude,
+        latitude,
+        altitude,
+        aktif,
+        satset_location_id
+    )
+VALUES
+    (
+        'SKI',
+        'SKI-GB1-R-RI-SDW',
+        'BL00000001',
+        'SADEWA',
+        'BANGSAL RAWAT INAP PASIEN DEWASA DAN ANAK SADEWA - LANTAI 1 - GEDUNG BARAT',
+        '-4.807.779.235.890.210',
+        '10.536.385.747.905.800',
+        '0',
+        1,
+        '17d99116-af40-475f-adac-1b393020c3ec'
+    );
+
+INSERT INTO
+    satset_locations (id, attributes)
+VALUES
+    (
+        '17d99116-af40-475f-adac-1b393020c3ec',
+        '{"id":"17d99116-af40-475f-adac-1b393020c3ec"}'
+    );
+
+-- Data Resource Location - Ruang Inap
+INSERT INTO
+    tbl_ruang (
+        koders,
+        bangsalid,
+        kodeunit,
+        koderuang,
+        namaruang,
+        fasilitas,
+        longitude,
+        latitude,
+        altitude,
+        satset_location_id
+    )
+VALUES
+    (
+        'SKI',
+        'BL00000001',
+        'SKI-GB1-R-RI-SDW1',
+        'INAPB00177',
+        'SADEWA 1',
+        'RUANG RAWAT INAP PASIEN DEWASA DAN ANAK SADEWA - LANTAI 1 - GEDUNG BARAT',
+        '-4.807.779.235.890.210',
+        '10.536.385.747.905.800',
+        '0',
+        '781e9eba-30d3-4166-adea-8e46e9c7e102'
+    );
+
+INSERT INTO
+    satset_locations (id, attributes)
+VALUES
+    (
+        '781e9eba-30d3-4166-adea-8e46e9c7e102',
+        '{"id":"781e9eba-30d3-4166-adea-8e46e9c7e102"}'
+    );
+
+-- Data Resource Location - Kamar Inap
+INSERT INTO
+    tbl_kamar (
+        koders,
+        koderuang,
+        kodeunit,
+        kodekamar,
+        namakamar,
+        description,
+        longitude,
+        latitude,
+        altitude,
+        aktif,
+        satset_location_id
+    )
+VALUES
+    (
+        'SKI',
+        'INAPB00177',
+        'SKI-GB1-RI-B1-SDW1-VIP',
+        'INAPB0017710',
+        'TT - 01',
+        'Tempat Tidur 1 - Sadewa 1 - Kelas VIP - Lantai 1 - Gedung Barat',
+        '-4.807.779.235.890.210',
+        '10.536.385.747.905.800',
+        '0',
+        1,
+        '3c30c892-3c71-445d-b2b5-da6460a466a0'
+    );
+
+INSERT INTO
+    satset_locations (id, attributes)
+VALUES
+    (
+        '3c30c892-3c71-445d-b2b5-da6460a466a0',
+        '{"id":"3c30c892-3c71-445d-b2b5-da6460a466a0"}'
     );
 
 -- Data Resource Practitioner - Dokter, Perawat dan Apoteker
@@ -994,11 +1174,6 @@ VALUES
         '11:05:00'
     );
 
-INSERT INTO
-    tbl_kasir (koders, nokwitansi, noreg, rekmed, tglbayar, jambayar)
-VALUES
-    ('SKI', 'SKI2025000000000002', 'SKIRJ20250000078', '0000077', '2025-04-25 11:15:00', '11:15:00');
-
 -- Resource Observation - Triage (Emergency)
 INSERT INTO
     tbl_triage (
@@ -1070,7 +1245,7 @@ VALUES
         'SKI',
         'SKIRJ20250000078',
         '0000077',
-        'PURO',
+        'PUGD',
         'SKIPRT0001',
         '2025-04-25 10:30:00',
         '10:30:00',
@@ -1096,7 +1271,28 @@ VALUES
         0,
         '[{"linkId":"1.1","text":"Apakah memiliki riwayat demam?","answer":"0"},{"linkId":"1.2","text":"Apakah berkeringat pada malam hari walaupun tanpa aktivitas?","answer":"0"},{"linkId":"1.3","text":"Apakah memiliki riwayat berpergian dari daerah wabah?","answer":"0"},{"linkId":"1.4","text":"Apakah memiliki riwayat pemakaian obat jangka panjang?","answer":"0"},{"linkId":"1.5","text":"Apakah memiliki riwayat BB turun tanpa sebab yang diketahui?","answer":"0"}]',
         '[{"linkId":"2.1","text":"Apakah ada  penurunan BB dalam waktu 6 bulan terakhir?","answer":"0"},{"linkId":"2.2","text":"Apakah ada penurunan asupan makanan karena nafsu makan berkurang?","answer":"0"},{"linkId":"2.3","text":"Apakah mengalami gejala gastrointestinal (seperti mual, muntah, diare, anorexia)?","answer":"0"},{"linkId":"2.4","text":"Apakah memiliki faktor pemberat (komorbid)?","answer":"0"},{"linkId":"2.5","text":"Apakah ada penurunan kapasitas fungsional?","answer":"0"}]',
-        'KELUAR002'
+        'KELUAR008'
+    );
+
+INSERT INTO
+    tbl_darirj (
+        noreg,
+        noreginap,
+        rekmed,
+        tglmasuk,
+        jammasuk,
+        kodokter,
+        kodepos
+    )
+VALUES
+    (
+        'SKIRJ20250000078',
+        'SKIRI20250000079',
+        '0000077',
+        '2025-04-25 11:05:00',
+        '11:05:00',
+        'SKIDR00001',
+        'PUGD'
     );
 
 -- Resource Condition - Diagnosa
@@ -1120,5 +1316,104 @@ INSERT INTO
     tbl_icdtr (koders, noreg, rekmed, icdcode, utama)
 VALUES
     ('SKI', 'SKIRJ20250000078', '0000077', '98.51', 0);
+
+-- Resource Encounter - Inpatient
+INSERT INTO
+    tbl_regist (
+        koders,
+        noreg,
+        rekmed,
+        tglmasuk,
+        jam,
+        jenispas,
+        tujuan,
+        kodokter,
+        koderuang,
+        kodekamar,
+        keluar,
+        closerm,
+        tglkeluar,
+        jamkeluar
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRI20250000079',
+        '0000077',
+        '2025-04-25 11:05:00',
+        '11:05:00',
+        'PAS1',
+        2,
+        'SKIDR1001',
+        'INAPB00177',
+        'INAPB0017710',
+        1,
+        1,
+        '2025-04-29 11:05:00',
+        '11:05:00'
+    );
+
+INSERT INTO
+    tbl_kasir (koders, nokwitansi, noreg, rekmed, tglbayar, jambayar)
+VALUES
+    ('SKI', 'SKI2025000000000003', 'SKIRI20250000079', '0000077', '2025-04-29 11:15:00', '11:15:00');
+
+-- Resource Condition - Rekam Medis (Inpatient)
+INSERT INTO
+    tbl_rekammedisrs (
+        koders,
+        noreg,
+        rekmed,
+        tglperiksa,
+        jam,
+        kodokter,
+        tglkonsul,
+        jamdikonsul,
+        kondisi_pulang
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRI20250000079',
+        '0000077',
+        '2025-04-25 12:30:00',
+        '12:30:00',
+        'SKIDR00001',
+        '2025-04-25 12:30:00',
+        '12:30:00',
+        'KELUAR002'
+    );
+
+-- Resource Observation - TTV (Inpatient)
+INSERT INTO
+    tbl_tanda_vital (
+        tanggal,
+        noreg,
+        rekmed,
+        td1,
+        td2,
+        nadi,
+        rr,
+        suhu,
+        spo2
+    )
+VALUES
+    (
+        '2025-04-25 12:30:00',
+        'SKIRI20250000079',
+        '0000077',
+        110,
+        90,
+        90,
+        30,
+        40,
+        98
+    );
+
+-- Resource Condition - Diagnosa
+INSERT INTO
+    tbl_icdtr (koders, noreg, rekmed, icdcode, utama)
+VALUES
+    ('SKI', 'SKIRI20250000079', '0000077', 'N18.4', 1);
 
 COMMIT;
