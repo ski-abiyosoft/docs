@@ -4,8 +4,7 @@
  WS PACS.
 </h1>
 
-![Version](https://img.shields.io/badge/version-1.5.1-brightgreen?style=for-the-badge)
-![Requirements](https://img.shields.io/badge/php-%3E%3D%208.2.19-4F5D95?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.0.1-brightgreen?style=for-the-badge)
 [![GitHub](https://img.shields.io/badge/GitHub-Repo-6f42c1?style=for-the-badge)](https://github.com/ski-abiyosoft/pacs)
 
 </div>
