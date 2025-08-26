@@ -32,6 +32,8 @@ Web Service Pengiriman Data PACS Untuk Menjembatani HMS.
 - `accession_number` digunakan sebagai **primary key** / **unique id** setiap pemeriksaan.
 - Maksimal panjang `accession_number` adalah **16 huruf**.
 
+#### 📌 Table: pacs_orders
+
 #### 📌 Struktur Data
 
 | No | Kolom               | Level      | Keterangan                                                                 | Contoh Data  |
