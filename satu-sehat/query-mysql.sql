@@ -56,15 +56,15 @@ WHERE
 -- Data Resource Practitioner - Dokter, Perawat dan Apoteker
 DELETE FROM tbl_dokter
 WHERE
-    kodokter IN ('SKIDR1001', 'SKIPRT0001', 'SKIPRT0002');
+    kodokter IN ('SKIDR1001', 'SKIDR1002', 'SKIPRT0001', 'SKIPRT0002');
 
 DELETE FROM tbl_doktercabang
 WHERE
-    kodokter IN ('SKIDR1001', 'SKIPRT0001', 'SKIPRT0002');
+    kodokter IN ('SKIDR1001', 'SKIDR1002', 'SKIPRT0001', 'SKIPRT0002');
 
 DELETE FROM satset_practitioners
 WHERE
-    id IN ('10009880728', '10014058550', '10001915884');
+    id IN ('10009880728', '10006926841', '10014058550', '10001915884');
 
 DELETE FROM users
 WHERE
@@ -112,6 +112,11 @@ DELETE FROM tbl_icdtr
 WHERE
     noreg IN ('SKIRJ20250000077', 'SKIRJ20250000078', 'SKIRI20250000079');
 
+-- Master Medication - Obat
+DELETE FROM tbl_barang
+WHERE
+    kodebarang IN ('0300');
+
 -- Resource MedicationRequest - E-Resep
 DELETE FROM tbl_orderperiksa
 WHERE
@@ -124,7 +129,7 @@ WHERE
 -- Resource QuestionnaireResponse - Telaah Resep
 DELETE FROM tbl_apotelaah
 WHERE
-    orderno IN ('SKIER20250000000001');
+    orderno IN ('SKIER20250000000001', 'SKIER20250000000002');
 
 -- Resource MedicationDispense - Farmasi Penjualan
 DELETE FROM tbl_apoposting
@@ -137,7 +142,63 @@ WHERE
 
 DELETE FROM tbl_apodresep
 WHERE
-    resepno IN ('SKIR202506000000001');
+    resepno IN ('SKIR202506000000001', 'SKIR202506000000001');
+
+DELETE FROM tbl_hmaslab
+WHERE
+    id IN (1);
+
+DELETE FROM tbl_tarifh
+WHERE
+    id IN (1, 2);
+
+DELETE FROM tbl_labmashasil
+WHERE
+    kodelab IN ('TARIF00066001');
+
+DELETE FROM tbl_orderperiksa
+WHERE
+    orderno IN ('SKIEL2025000000001', 'SKIERD2025000000001');
+
+DELETE FROM tbl_elab
+WHERE
+    notr IN ('SKIEL2025000000001');
+
+DELETE FROM tbl_spesimen
+WHERE
+    nolaborat IN ('SKIAL20250000000001');
+
+DELETE FROM tbl_spesimen_pemeriksaan
+WHERE
+    spesimen_id IN (1);
+
+DELETE FROM tbl_hlab
+WHERE
+    nolaborat IN ('SKIAL20250000000001');
+
+DELETE FROM tbl_dlab
+WHERE
+    id IN (1);
+
+DELETE FROM tbl_dhasillabnew
+WHERE
+    nolaborat IN ('SKIAL20250000000001');
+
+DELETE FROM tbl_eradio
+WHERE
+    notr IN ('SKIERD2025000000001');
+
+DELETE FROM tbl_hradio
+WHERE
+    noradio IN ('SKIRD-202500000001');
+
+DELETE FROM tbl_dradio
+WHERE
+    id IN (1);
+
+DELETE FROM tbl_expertise
+WHERE
+    noradio IN ('SKIRD-202500000001');
 
 -- =========================
 -- INSERT DATA BARU
@@ -585,6 +646,38 @@ VALUES
     ('SKI', 'SKIDR1001');
 
 INSERT INTO
+    tbl_dokter (
+        koders,
+        kodokter,
+        nik,
+        nadokter,
+        jenis_kerja_sama,
+        jenispegawai,
+        nostr,
+        hp,
+        status,
+        satset_practitioner_id
+    )
+VALUES
+    (
+        'SKI',
+        'SKIDR1002',
+        '3322071302900002',
+        'dr. Yoga Yandika, Sp.A',
+        2,
+        1,
+        '10 01 0 0 0 00-0001002',
+        '082211223345',
+        'ON',
+        '10006926841'
+    );
+
+INSERT INTO
+    tbl_doktercabang (koders, kodokter)
+VALUES
+    ('SKI', 'SKIDR1002');
+
+INSERT INTO
     satset_practitioners (id, attributes)
 VALUES
     ('10009880728', '{"id":"10009880728"}');
@@ -758,7 +851,7 @@ VALUES
         1,
         'PURO',
         'SKIDR1001',
-        2,
+        1,
         1,
         1,
         '2025-04-24 11:05:00',
@@ -855,6 +948,22 @@ INSERT INTO
     tbl_icdtr (koders, noreg, rekmed, icdcode, utama)
 VALUES
     ('SKI', 'SKIRJ20250000077', '0000077', '98.51', 0);
+
+-- Master Medication - Obat
+INSERT INTO
+    tbl_barang (
+        kodebarang,
+        namabarang,
+        namageneric,
+        satuan1
+    )
+VALUES
+    (
+        '0300',
+        'PARACETAMOL 500MG TAB KF',
+        'PARACETAMOL 500MG TAB KF',
+        'TABLET'
+    );
 
 -- Resource MedicationRequest - E-Resep
 INSERT INTO
@@ -1167,7 +1276,7 @@ VALUES
         1,
         'PUGD',
         'SKIDR1001',
-        1,
+        2,
         1,
         1,
         '2025-04-25 11:05:00',
@@ -1295,6 +1404,288 @@ VALUES
         'PUGD'
     );
 
+-- Resource MedicationRequest - E-Resep
+INSERT INTO
+    tbl_orderperiksa (
+        koders,
+        orderno,
+        noreg,
+        rekmed,
+        tglorder,
+        jamorder,
+        proses,
+        kodokter,
+        asal,
+        resep,
+        resepok,
+        username,
+        gudang,
+        obatpulang,
+        kodepos
+    )
+VALUES
+    (
+        'SKI',
+        'SKIER20250000000002',
+        'SKIRJ20250000078',
+        '0000077',
+        '2025-04-25 10:35:00',
+        '10:35:00',
+        '1',
+        'SKIDR1001',
+        'Instalasi Gawat Darurat | BED 01',
+        1,
+        1,
+        'admin',
+        'FARMASI',
+        0,
+        'PUGD'
+    );
+
+INSERT INTO
+    tbl_eresep (
+        koders,
+        noreg,
+        orderno,
+        kodeobat,
+        namaobat,
+        satuan,
+        qty,
+        harga,
+        totalharga,
+        aturanpakai,
+        kronis
+    )
+VALUES
+    (
+        'SKI',
+        'SKIRJ20250000078',
+        'SKIER20250000000002',
+        '0300',
+        'PARACETAMOL 500MG TAB KF',
+        'TABLET',
+        12,
+        235,
+        2830,
+        '3 X 1',
+        0
+    );
+
+-- Resource QuestionnaireResponse - Telaah Resep
+INSERT INTO
+    tbl_apotelaah (orderno, kode, aspek, unsur, resepno, ok)
+VALUES
+    (
+        'SKIER20250000000002',
+        1,
+        'KELENGKAPAN PENGISIAN RESEP',
+        'administrasi',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        2,
+        'KEJELASAN PENULISAN RESEP',
+        'administrasi',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        3,
+        'TETAP OBAT (NAMA, BENTUK, KEKUATAN,JUMLAH)',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        4,
+        'TEPAT FREKUENSI',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        5,
+        'OBAT STABIL SECARA FISIK DAN KIMIA',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        6,
+        'OBAT TERSEDIA',
+        'farmasetis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        7,
+        'TEPAT INDIKASI/DOSIS/WAKTU/RUTE',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        8,
+        'DUPLIKASI TERAPI',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        9,
+        'INTERAKSI',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'SKIER20250000000002',
+        10,
+        'KONTRADIKSI',
+        'klinis',
+        '',
+        1
+    ),
+    (
+        'RSAER20250000019324',
+        11,
+        'ROTD/TOKSISITAS',
+        'klinis',
+        '',
+        1
+    );
+
+-- Resource MedicationDispense - Farmasi Penjualan
+INSERT INTO
+    tbl_apoposting (
+        koders,
+        resepno,
+        eresepno,
+        tglresep,
+        noreg,
+        rekmed,
+        namapas,
+        umurpas,
+        gudang,
+        poscredit,
+        diskonrp,
+        bayar,
+        posting,
+        keluar,
+        kodepel,
+        username
+    )
+VALUES
+    (
+        'SKI',
+        'SKIR202506000000002',
+        'SKIER20250000000002',
+        '2025-04-25 10:38:00',
+        'SKIRJ20250000078',
+        '0000077',
+        'Ardianto Putra',
+        '28 tahun, 8 bulan, 9 hari',
+        'FARMASI',
+        2830,
+        0,
+        0,
+        1,
+        0,
+        'RAJAL',
+        'admin'
+    );
+
+INSERT INTO
+    tbl_apohresep (
+        koders,
+        resepno,
+        eresepno,
+        noreg,
+        rekmed,
+        jenisjual,
+        jenispas,
+        pro,
+        tglresep,
+        jam,
+        kodokter,
+        gudang,
+        bayar,
+        posting,
+        username,
+        kodepel,
+        tgl_telaah,
+        user_telaah
+    )
+VALUES
+    (
+        'SKI',
+        'SKIR202506000000002',
+        'SKIER20250000000002',
+        'SKIRJ20250000078',
+        '0000077',
+        1,
+        1,
+        'Ardianto Putra',
+        '2025-04-25 10:38:00',
+        '10:38:00',
+        'SKIDR1001',
+        'FARMASI',
+        0,
+        1,
+        'admin',
+        'RAJAL',
+        '2025-04-25 10:39:00',
+        'user_apoteker'
+    );
+
+INSERT INTO
+    tbl_apodresep (
+        resepno,
+        eresepno,
+        koders,
+        kodebarang,
+        namabarang,
+        qty,
+        satuan,
+        discrp,
+        price,
+        hna,
+        hpp,
+        ppntype,
+        totalrp,
+        atpakai,
+        exp_date,
+        kronis
+    )
+VALUES
+    (
+        'SKIR202506000000002',
+        'SKIER20250000000002',
+        'SKI',
+        '0300',
+        'PARACETAMOL 500MG TAB KF',
+        12,
+        'TABLET',
+        0,
+        235,
+        170,
+        170,
+        1,
+        2830,
+        '3 X 1',
+        '2025-06-11',
+        0
+    );
+
 -- Resource Condition - Diagnosa
 INSERT INTO
     tbl_icdtr (koders, noreg, rekmed, icdcode, utama)
@@ -1415,5 +1806,94 @@ INSERT INTO
     tbl_icdtr (koders, noreg, rekmed, icdcode, utama)
 VALUES
     ('SKI', 'SKIRI20250000079', '0000077', 'N18.4', 1);
+
+-- Master Golongan Pemeriksaan Laboratorium
+INSERT INTO
+    tbl_hmaslab (id, koders, kodegol, namagol)
+VALUES
+    (1, 'SKI', 'HM', 'HEMATOLOGI');
+
+-- Master Tarif Pemeriksaan Laboratorium
+INSERT INTO
+    tbl_tarifh (id, koders, kodetarif, tindakan, kodepos, hmaslab_id)
+VALUES
+    (1, 'SKI', 'TARIF00066', 'Trombosit', 'LABOR', 1);
+
+-- Master Hasil Pemeriksaan Laboratorium
+INSERT INTO
+    tbl_labmashasil (koders, tarifh_id, kodeperiksa, kodelab, nmperiksa, satuan, nilainormalp1, nilainormalp2, nilainormalw1, nilainormalw2, nilainormala1, nilainormala2)
+VALUES
+    ('SKI', 1, 'TARIF00066', 'TARIF00066001', 'Trombosit', 'ribu/ul', 150, 400, 150, 400, 150, 450);
+
+-- Order Pemeriksaan Laboratorium
+INSERT INTO
+    tbl_orderperiksa (koders, orderno, noreg, rekmed, tglorder, jamorder, proses, kodokter, asal, lab, labok, username, kodepos)
+VALUES
+    ('SKI', 'SKIEL2025000000001', 'SKIRJ20250000077', '0000077', '2025-04-24 10:35:00', '10:35:00', 1, 'SKIDR1001', 'Spesialis Urologi \| Ruang Spesialis Urologi', 1, 1, 'admin', 'PURO');
+
+INSERT INTO
+    tbl_elab (noreg, notr, kodetarif, tindakan, tarifrs, tarifdr)
+VALUES
+    ('SKIRJ20250000077', 'SKIEL2025000000001', '1', 'Trombosit', 35000, 0);
+
+-- Spesimen Pemeriksaan Laboratorium
+INSERT INTO
+    tbl_spesimen (id, nolaborat, kode_jenis_spesimen, kode_metode_pengambilan, kode_petugas, qty, kode_satuan, tanggal_diambil, tanggal_diserahkan)
+VALUES
+    (1, 'SKIAL20250000000001', '119297000', '82078001', 'SKIPRT0001', 10, 'mL', '2025-04-24 12:00:00', '2025-04-24 12:10:00');
+
+INSERT INTO
+    tbl_spesimen_pemeriksaan (spesimen_id, pemeriksaan_id)
+VALUES
+    (1, 1);
+
+-- Pemeriksaan Laboratorium
+INSERT INTO
+    tbl_hlab (koders, nolaborat, orderno, noreg, rekmed, tgllab, jam, posting, asal, drpengirim, drperiksa, kodepetugas, tglselesai, jamselesai, username)
+VALUES
+    ('SKI', 'SKIAL20250000000001', 'SKIEL2025000000001', 'SKIRJ20250000077', '0000077', '2025-04-24 10:35:00', '10:35:00', 1, 'Spesialis Urologi | Ruang Spesialis Urologi', 'SKIDR1001', 'SKIDR1002', 'SKIPRT0001', '2025-04-24 13:45:00', '13:45:00', 'admin');
+
+INSERT INTO
+    tbl_dlab (id, nolaborat, kodetarif, qty, tarifrs, tarifdr, tarifrp, totalrp, kesimpulan_pemeriksaan)
+VALUES
+    (1, 'SKIAL20250000000001', '1', '1', 35000, 0, 35000, 35000, 'High');
+
+INSERT INTO
+    tbl_dhasillabnew (nolaborat, dlab_id, kodeperiksa, kodelab, pemeriksaan, satuan, hasilc, normal1, normal2)
+VALUES
+    ('SKIAL20250000000001', 1, '1', 'TARIF00066001', 'Trombosit', 'ribu/ul', 405, 150, 400);
+
+-- Master Tarif Pemeriksaan Radiologi
+INSERT INTO
+    tbl_tarifh (id, koders, kodetarif, tindakan, kodepos)
+VALUES
+    (2, 'SKI', 'RD-B000082', 'THORAX AP/PA', 'RADIO');
+
+-- Order Pemeriksaan Radiologi
+INSERT INTO
+    tbl_orderperiksa (koders, orderno, noreg, rekmed, tglorder, jamorder, proses, kodokter, asal, lab, labok, username, kodepos)
+VALUES
+    ('SKI', 'SKIERD2025000000001', 'SKIRJ20250000077', '0000077', '2025-04-24 10:35:00', '10:35:00', 1, 'SKIDR1001', 'Spesialis Urologi \| Ruang Spesialis Urologi', 1, 1, 'admin', 'PURO');
+
+INSERT INTO
+    tbl_eradio (noreg, notr, kodetarif, tindakan, tarifrs, tarifdr)
+VALUES
+    ('SKIRJ20250000077', 'SKIERD2025000000001', '2', 'THORAX AP/PA', 139500, 40500);
+
+-- Pemeriksaan Radiologi
+INSERT INTO
+    tbl_hradio (koders, noradio, orderno, noreg, rekmed, tglradio, jam, posting, asal, drpengirim, drperiksa, kodepetugas, tglfoto, jamfoto, tglselesai, jamselesai, username)
+VALUES
+    ('SKI', 'SKIRD-202500000001', 'SKIERD2025000000001', 'SKIRJ20250000077', '0000077', '2025-04-24 10:35:00', '10:35:00', 1, 'Spesialis Urologi | Ruang Spesialis Urologi', 'SKIDR1001', 'SKIDR1002', 'SKIPRT0001', '2025-04-24', '11:00:00', '2025-04-24 13:45:00', '13:45:00', 'admin');
+
+INSERT INTO
+    tbl_dradio (id, noradio, kodetarif, qty, tarifrs, tarifdr, tarif_rp, total_biaya)
+VALUES
+    (1, 'SKIRD-202500000001', '2', 1, 139500, 40500, 180000, 180000);
+
+INSERT INTO
+    tbl_expertise (noradio, dradio_id, catatan, klinis)
+VALUES
+    ('SKIRD-202500000001', 1, 'Left upper and middle lung zones show reticulonodular opacities.\nThe left apical lung zone shows a cavitary lesion (active TB).\nLeft apical pleural thickening.\nMild mediastinum widening is noted.\nNormal heart size.\nFree costophrenic angles.', 'Tidak ada kelainan dari gejala DB');
 
 COMMIT;
