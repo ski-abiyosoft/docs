@@ -1105,7 +1105,7 @@ Selain itu:
 Note:
 - Untuk mengambil data Master Jenis Spesimen ada di tabel: `specimen_types`
 - Untuk mengambil data Master Metode Pengambilan Spesimen ada di tabel: `specimen_collection_methods`
-- Untuk mengambil data Satuan Spesimen ada di tabel: `dosage_quantity_units` dengan `system` = 'http://unitsofmeasure.org'
+- Untuk mengambil data Master Satuan Spesimen ada di tabel: `dosage_quantity_units` dengan `system` = 'http://unitsofmeasure.org'
 
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_spesimen_pemeriksaan` menggunakan `koders` dan `kodokter`. Jika sudah ada, jangan insert.**
 
