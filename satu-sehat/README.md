@@ -1094,13 +1094,18 @@ Selain itu:
 | ------------------------- | --------------------------------------------------- | ---------------------------------------------- |
 | `id`                      | Id (Auto Increment)                                 | 1                                              |
 | `nolaborat`               | Nomor Pemeriksaan Laboratorium                      | 'SKIAL20250000000001'                          |
-| `kode_jenis_spesimen`     | Nomor Order Pemeriksaan                             | '119297000'                                    |
-| `kode_metode_pengambilan` | Nomor Registrasi                                    | '82078001'                                     |
+| `kode_jenis_spesimen`     | Kode Jenis Spesimen                                 | '119297000'                                    |
+| `kode_metode_pengambilan` | Kode Metode Pengambilan Spesimen                    | '82078001'                                     |
 | `kode_petugas`            | Kode Petugas Yg Mengambil Spesimen                  | 'SKIPRT0001'                                   |
 | `qty`                     | Qty Spesimen                                        | 10                                             |
 | `kode_satuan`             | Kode Satuan Spesimen                                | 'mL'                                           |
 | `tanggal_diambil`         | Tanggal Selesai Pemeriksaan                         | '2025-04-24 12:00:00'                          |
 | `tanggal_diserahkan`      | Jam Selesai Pemeriksaan                             | '2025-04-24 12:10:00'                          |
+
+Note:
+- Untuk mengambil data Master Jenis Spesimen ada di tabel: `specimen_types`
+- Untuk mengambil data Master Metode Pengambilan Spesimen ada di tabel: `specimen_collection_methods`
+- Untuk mengambil data Satuan Spesimen ada di tabel: `dosage_quantity_units` dengan `system` = 'http://unitsofmeasure.org'
 
 **Sebelum melakukan insert, lakukan pengecekan dengan `tbl_spesimen_pemeriksaan` menggunakan `koders` dan `kodokter`. Jika sudah ada, jangan insert.**
 
