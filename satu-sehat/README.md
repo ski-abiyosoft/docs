@@ -1116,6 +1116,10 @@ Note:
 | `spesimen_id`      | Id tbl_spesimen_pemeriksaan                              | 1                          |
 | `pemeriksaan_id`   | Id tbl_dlab                                              | 1                          |
 
+**Tampilan Form Spesimen:**
+
+![Tampilan Form Spesimen](./public/img/specimens.png)
+
 ## 20. Resource Observation, DiagnosticReport - Pemeriksaan Laboratorium
 
 ### Contoh Data Pemeriksaan Laboratorium Trombosit:
