@@ -26,6 +26,7 @@
 - [21. Master Tarif Pemeriksaan Radiologi](#21-master-tarif-pemeriksaan-radiologi)
 - [22. Resource ServiceRequest - Order Pemeriksaan Radiologi](#22-resource-servicerequest---order-pemeriksaan-radiologi)
 - [23. Resource Observation, DiagnosticReport - Pemeriksaan Radiologi](#23-resource-observation-diagnosticreport---pemeriksaan-radiologi)
+- [24. Resource MedicationStatement - Riwayat Pengobatan](#24-resource-medicationstatement---riwayat-pengobatan)
 
 ## Perkenalan
 
@@ -1279,4 +1280,50 @@ Note:
 | `noradio`      | Nomor Pemeriksaan Radiologi                             | 'SKIRD-202500000001'       |
 | `dradio_id`    | Id dradio_id                                            | 1                          |
 | `catatan`      | Hasil / Expertised                                      | 'Left upper and middle lung zones show reticulonodular opacities.<br>The left apical lung zone shows a cavitary lesion( active TB).<br>Left apical pleural thickening<br>Mild mediastinum widening is noted<br>Normal heart size.<br>Free costophrenic angles.' |
-| `klinis`      | Keterangan Klinis                                        | 'Tidak ada kelainan dari gejala DB' |
+| `klinis`       | Keterangan Klinis                                       | 'Tidak ada kelainan dari gejala DB' |
+
+
+## 24. Resource MedicationStatement - Riwayat Pengobatan
+
+### Contoh Data Riwayat Pengobatan yang dikonsumsi Pasien sebelumnya berasal dari Fasyankes tempat dilakukan pelayanan:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_riwayat_pengobatan`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_riwayat_pengobatan`
+
+| Nama Kolom                | Keterangan                                          | Contoh Data                                    |
+| ------------------------- | --------------------------------------------------- | ---------------------------------------------- |
+| `id`                      | Id (Auto Increment)                                 | 1                                              |
+| `tgl_diberikan`           | Tanggal obat diberikan/mulai dikonsumsi             | '2025-06-04 08:59:30'                          |
+| `resep_id`                | resepid dari tbl_apodresep (Wajib di isi jika berasal dari Fasyankes tempat dilakukan pelayanan) | 131592 |
+| `kfa_code`                | Kode KFA Obat (Tidak di isi jika berasal dari Fasyankes tempat dilakukan pelayanan)| null |
+| `dosis`                   | Dosis/Aturan pakai                                  | '2 x 1'                                        |
+| `status`                  | Status penggunaan obat ("active" jika "Sedang menggunakan", "completed" jika "Selesai", "stopped" jika "Dihentikan", "on-hold" jika "Ditunda sementara waktu") | 'completed' |
+| `noreg`                   | Nomor Registrasi                                    | 'SKIRJ20250000077'                             |
+| `rekmed`                  | Nomor Rekam Medis Pasien                            | '0000077'                                      |
+| `obat`                    | Nama obat                                           | 'BIOSANBE CAPS'                                |
+| `created_at`              | Tanggal pencatatan                                  | '2026-01-22 11:00:00'                          |
+
+### Contoh Data Riwayat Pengobatan yang dikonsumsi Pasien sebelumnya bukan berasal dari Fasyankes tempat dilakukan pelayanan:
+**Sebelum melakukan insert, lakukan pengecekan dengan `tbl_riwayat_pengobatan`. Jika sudah ada, jangan insert.**
+
+**Tabel:** `tbl_riwayat_pengobatan`
+
+| Nama Kolom                | Keterangan                                          | Contoh Data                                    |
+| ------------------------- | --------------------------------------------------- | ---------------------------------------------- |
+| `id`                      | Id (Auto Increment)                                 | 2                                              |
+| `tgl_diberikan`           | Tanggal obat diberikan/mulai dikonsumsi             | '2026-01-21 12:00:00'                          |
+| `resep_id`                | resepid dari tbl_apodresep (Tidak di isi jika bukan berasal dari Fasyankes tempat dilakukan pelayanan)| null |
+| `kfa_code`                | Kode KFA Obat (Wajib di isi jika bukan berasal dari Fasyankes tempat dilakukan pelayanan)| '93015366' |
+| `dosis`                   | Dosis/Aturan pakai                                  | '3 x 1'                                        |
+| `status`                  | Status penggunaan obat ("active" jika "Sedang menggunakan", "completed" jika "Selesai", "stopped" jika "Dihentikan", "on-hold" jika "Ditunda sementara waktu") | 'active' |
+| `noreg`                   | Nomor Registrasi                                    | 'SKIRJ20250000077'                             |
+| `rekmed`                  | Nomor Rekam Medis Pasien                            | '0000077'                                      |
+| `obat`                    | Nama obat                                           | 'Paracetamol 500 mg Tablet (PARACETAMOL TABLET 500 MG, STRIP)' |
+| `created_at`              | Tanggal pencatatan                                  | '2026-01-22 11:00:00'                          |
+
+Note:
+- Untuk mengambil data Obat KFA yang bukan berasal dari Fasyankes tempat dilakukan pelayanan ada di API: {base_url_satset}/api/kfa-v2/product?branch={koders}&keyword={obat_yang_mau_dicari} => https://192.168.1.209:8083/api/kfa-v2/product?branch=002&keyword=paracetamol
+
+**Tampilan Form Riwayat Pengobatan:**
+
+![Tampilan Form Riwayat Pengobatan](./public/img/medication-statement.png)
