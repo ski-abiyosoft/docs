@@ -200,6 +200,11 @@ DELETE FROM tbl_expertise
 WHERE
     noradio IN ('SKIRD-202500000001');
 
+-- Resource MedicationStatement - Riwayat Pengobatan
+DELETE FROM tbl_riwayat_pengobatan
+WHERE
+    noreg IN ('SKIRJ20250000077');
+
 -- =========================
 -- INSERT DATA BARU
 -- =========================
@@ -1896,4 +1901,15 @@ INSERT INTO
 VALUES
     ('SKIRD-202500000001', 1, 'Left upper and middle lung zones show reticulonodular opacities.\nThe left apical lung zone shows a cavitary lesion (active TB).\nLeft apical pleural thickening.\nMild mediastinum widening is noted.\nNormal heart size.\nFree costophrenic angles.', 'Tidak ada kelainan dari gejala DB');
 
+-- Riwayat Pengobatan yang dikonsumsi Pasien sebelumnya berasal dari Fasyankes tempat dilakukan pelayanan
+INSERT INTO
+    tbl_riwayat_pengobatan (tgl_diberikan, resep_id, dosis, status, noreg, rekmed, obat, created_at)
+VALUES
+    ('2025-06-04 08:59:30', 131592, '2 x 1', 'completed', 'SKIRJ20250000077', '0000077', 'BIOSANBE CAPS', '2026-01-22 11:00:00');
+
+-- Riwayat Pengobatan yang dikonsumsi Pasien sebelumnya bukan berasal dari Fasyankes tempat dilakukan pelayanan
+INSERT INTO
+    tbl_riwayat_pengobatan (tgl_diberikan, kfa_code, dosis, status, noreg, rekmed, obat, created_at)
+VALUES
+    ('2025-06-04 08:59:30', '93015366', '3 x 1', 'active', 'SKIRJ20250000077', '0000077', 'Paracetamol 500 mg Tablet (PARACETAMOL TABLET 500 MG, STRIP)', '2026-01-22 11:00:00');
 COMMIT;
